@@ -71,235 +71,114 @@ graph TB
 
 ## 🗂️ Cấu trúc dự án tối ưu
 
-### 📁 Tổ chức thư mục theo nguyên tắc Clean Architecture + Features-based
+### 📁 Solution Structure - 5 Projects theo Clean Architecture
+
+Dự án được chia thành **5 projects chính** theo nguyên tắc Clean Architecture:
+
+| Project | Vai trò | Phụ thuộc |
+|---------|---------|-----------|
+| **� SharedKernel** | Common abstractions, base classes | Không có |
+| **🟧 Domain** | Business logic, entities, rules | SharedKernel |
+| **🟨 Application** | Use cases, CQRS handlers | Domain, SharedKernel |
+| **🟥 Infrastructure** | Data access, external services | Application, Domain, SharedKernel |
+| **🟦 API** | REST endpoints, controllers | Application, SharedKernel |
+
+### 📁 Cây thư mục tổng quan
 
 ```
-HaiphongTech/                               # 🏠 Solution Root
+HaiphongTech.sln                   # Solution file chính
 │
-├── 📁 src/                                 # Mã nguồn chính
+├── src/                          # Thư mục chứa mã nguồn
+│   
+│   ├── HaiphongTech.API/         # 🟦 Presentation Layer (Web API)
+│   │   ├── Controllers/          # Định nghĩa các endpoint REST
+│   │   │   └── ProductsController.cs
+│   │   ├── Middlewares/          # Xử lý lỗi, xác thực, logging
+│   │   │   └── ErrorHandlingMiddleware.cs
+│   │   ├── Filters/              # Action/Exception filters
+│   │   │   └── ValidationFilter.cs
+│   │   ├── Extensions/           # Đăng ký dịch vụ, Swagger
+│   │   │   └── ServiceCollectionExtensions.cs
+│   │   └── Program.cs            # Điểm khởi động ứng dụng
 │   │
-│   ├── 🟦 HaiphongTech.API/               # Tầng Giao diện (Presentation)
-│   │   ├── Controllers/                    # ✅ REST API endpoints
-│   │   │   ├── SanPhamsController.cs      # API cho sản phẩm
-│   │   │   └── DonHangsController.cs      # API cho đơn hàng
-│   │   ├── Middlewares/                    # ✅ Exception, Logging, CORS
-│   │   │   ├── ExceptionMiddleware.cs
-│   │   │   └── LoggingMiddleware.cs
-│   │   ├── Filters/                        # ✅ Action filters, Authorization
-│   │   ├── Extensions/                     # ✅ DI registration, Configuration
-│   │   │   ├── ServiceCollectionExtensions.cs
-│   │   │   └── WebApplicationExtensions.cs
-│   │   └── Program.cs                      # ✅ Entry point
+│   ├── HaiphongTech.Application/ # 🟨 Application Layer (CQRS)
+│   │   ├── Behaviors/            # Pipeline behaviors MediatR
+│   │   │   └── ValidationBehavior.cs
+│   │   ├── Features/             # Chia theo tính năng (feature)
+│   │   │   └── Products/
+│   │   │       ├── Commands/     # Lệnh ghi dữ liệu
+│   │   │       │   └── CreateProduct/
+│   │   │       │       ├── CreateProductCommand.cs
+│   │   │       │       ├── CreateProductHandler.cs
+│   │   │       │       └── CreateProductValidator.cs
+│   │   │       ├── Queries/      # Truy vấn đọc dữ liệu
+│   │   │       │   └── GetProductById/
+│   │   │       │       ├── GetProductByIdQuery.cs
+│   │   │       │       ├── GetProductByIdHandler.cs
+│   │   │       │       └── GetProductByIdValidator.cs
+│   │   │       ├── DTOs/         # Đối tượng truyền dữ liệu giữa các tầng
+│   │   │       │   └── ProductDto.cs
+│   │   │       └── Mappings/     # AutoMapper profiles
+│   │   │           └── ProductProfile.cs
+│   │   └── Common/               # Các lớp chung trong Application
+│   │       └── Exceptions/
+│   │           └── ValidationException.cs
 │   │
-│   ├── 🟨 HaiphongTech.Application/       # Tầng Ứng dụng (Use Cases)
-│   │   ├── 🎨 Features/                   # ⭐ Tổ chức theo tính năng
-│   │   │   │
-│   │   │   ├── 📦 SanPhams/               # Module Sản phẩm
-│   │   │   │   ├── Commands/              # 📝 Lệnh ghi dữ liệu
-│   │   │   │   │   ├── TaoSanPham/       # ➕ Tạo sản phẩm
-│   │   │   │   │   │   ├── TaoSanPhamCommand.cs
-│   │   │   │   │   │   ├── TaoSanPhamHandler.cs
-│   │   │   │   │   │   └── TaoSanPhamValidator.cs
-│   │   │   │   │   ├── CapNhatSanPham/   # ✏️ Cập nhật sản phẩm
-│   │   │   │   │   └── XoaSanPham/       # 🗑️ Xóa sản phẩm
-│   │   │   │   ├── Queries/               # 📖 Truy vấn đọc dữ liệu
-│   │   │   │   │   ├── LayDanhSachSanPham/
-│   │   │   │   │   ├── LayChiTietSanPham/
-│   │   │   │   │   └── TimKiemSanPham/
-│   │   │   │   ├── DTOs/                  # 📋 Data Transfer Objects
-│   │   │   │   │   ├── SanPhamDto.cs
-│   │   │   │   │   ├── TaoSanPhamDto.cs
-│   │   │   │   │   └── DanhSachSanPhamDto.cs
-│   │   │   │   ├── Validators/            # ✅ Validation rules
-│   │   │   │   └── Specifications/       # 🔍 Query specifications
-│   │   │   │       ├── SanPhamTheoTrangThaiSpec.cs
-│   │   │   │       └── SanPhamTheoGiaSpec.cs
-│   │   │   │
-│   │   │   └── 📦 DonHangs/               # Module Đơn hàng
-│   │   │       ├── Commands/
-│   │   │       ├── Queries/
-│   │   │       ├── DTOs/
-│   │   │       ├── Validators/
-│   │   │       └── Specifications/
-│   │   │
-│   │   ├── Common/                        # 🔧 Logic ứng dụng chung
-│   │   │   ├── Behaviors/                 # 🔄 MediatR behaviors
-│   │   │   │   ├── ValidationBehavior.cs
-│   │   │   │   ├── LoggingBehavior.cs
-│   │   │   │   └── PerformanceBehavior.cs
-│   │   │   ├── Interfaces/                # 📋 Application interfaces
-│   │   │   │   ├── IEmailService.cs
-│   │   │   │   └── IFileService.cs
-│   │   │   └── Mappings/                  # 🗺️ AutoMapper profiles
-│   │   │
-│   │   └── DependencyInjection.cs        # 🔌 DI registration
+│   ├── HaiphongTech.Domain/      # 🟧 Domain Layer (Business Logic)
+│   │   ├── Entities/             # Các thực thể chính
+│   │   │   └── Product.cs
+│   │   ├── Aggregates/           # Aggregate roots
+│   │   │   └── OrderAggregate.cs
+│   │   ├── ValueObjects/         # Kiểu giá trị bất biến
+│   │   │   └── Money.cs
+│   │   ├── Events/               # Domain events
+│   │   │   └── ProductCreatedEvent.cs
+│   │   ├── Repositories/         # Interface repository
+│   │   │   └── IProductRepository.cs
+│   │   └── Specifications/       # Business-rule specifications
+│   │       ├── ProductIsActiveSpecification.cs
+│   │       └── ProductPriceBetweenSpecification.cs
 │   │
-│   ├── 🟧 HaiphongTech.Domain/            # Tầng Nghiệp vụ (Business Logic)
-│   │   ├── 🏢 Entities/                   # Thực thể nghiệp vụ
-│   │   │   ├── SanPham.cs                 # 🛍️ Entity Sản phẩm
-│   │   │   ├── DonHang.cs                 # 📋 Entity Đơn hàng
-│   │   │   ├── KhachHang.cs               # 👤 Entity Khách hàng
-│   │   │   └── Common/                    # Base entities
-│   │   │       ├── BaseEntity.cs
-│   │   │       └── BaseAuditableEntity.cs
-│   │   │
-│   │   ├── 💎 ValueObjects/               # Đối tượng giá trị
-│   │   │   ├── TienTe.cs                  # 💰 Value Object tiền tệ
-│   │   │   ├── DiaChi.cs                  # 📍 Value Object địa chỉ
-│   │   │   ├── Email.cs                   # 📧 Value Object email
-│   │   │   └── SoDienThoai.cs             # 📱 Value Object số điện thoại
-│   │   │
-│   │   ├── 🎯 Aggregates/                 # Aggregate roots
-│   │   │   ├── SanPhamAggregate/
-│   │   │   │   ├── SanPham.cs
-│   │   │   │   └── DanhGiaSanPham.cs
-│   │   │   └── DonHangAggregate/
-│   │   │       ├── DonHang.cs
-│   │   │       └── ChiTietDonHang.cs
-│   │   │
-│   │   ├── 📢 DomainEvents/               # Sự kiện nghiệp vụ
-│   │   │   ├── SanPhamDuocTaoEvent.cs
-│   │   │   ├── SanPhamThayDoiGiaEvent.cs
-│   │   │   ├── DonHangDuocTaoEvent.cs
-│   │   │   └── DonHangDuocXacNhanEvent.cs
-│   │   │
-│   │   ├── 🔧 Services/                   # Domain services
-│   │   │   ├── TinhGiaDichVu.cs           # Tính giá sản phẩm
-│   │   │   ├── KiemTraTonKhoDichVu.cs     # Kiểm tra tồn kho
-│   │   │   └── XuLyKhuyenMaiDichVu.cs     # Xử lý khuyến mãi
-│   │   │
-│   │   ├── 📋 Interfaces/                 # Domain contracts
-│   │   │   ├── Repositories/
-│   │   │   │   ├── ISanPhamRepository.cs
-│   │   │   │   ├── IDonHangRepository.cs
-│   │   │   │   └── IKhachHangRepository.cs
-│   │   │   └── Services/
-│   │   │       ├── ITinhGiaDichVu.cs
-│   │   │       └── IKiemTraTonKhoDichVu.cs
-│   │   │
-│   │   ├── 🔍 Specifications/             # Business query logic
-│   │   │   ├── SanPhamSpecifications.cs
-│   │   │   ├── DonHangSpecifications.cs
-│   │   │   └── KhachHangSpecifications.cs
-│   │   │
-│   │   ├── 📊 Enums/                      # Domain enumerations
-│   │   │   ├── TrangThaiSanPham.cs
-│   │   │   ├── TrangThaiDonHang.cs
-│   │   │   ├── LoaiKhachHang.cs
-│   │   │   └── PhuongThucThanhToan.cs
-│   │   │
-│   │   └── 🚫 Exceptions/                 # Domain exceptions
-│   │       ├── SanPhamKhongTonTaiException.cs
-│   │       ├── DonHangKhongHopLeException.cs
-│   │       └── KhachHangKhongHopLeException.cs
+│   ├── HaiphongTech.Infrastructure/ # 🟥 Infrastructure Layer
+│   │   ├── Persistence/          # Cơ chế lưu trữ dữ liệu
+│   │   │   ├── DbContexts/       # DbContext EF Core
+│   │   │   │   └── ApplicationDbContext.cs
+│   │   │   ├── Repositories/     # Triển khai Repository
+│   │   │   │   └── ProductRepository.cs
+│   │   │   └── Migrations/       # Migrations EF Core
+│   │   ├── External/             # Service ngoài (Mail, Payment)
+│   │   │   └── EmailService.cs
+│   │   └── Messaging/            # Xử lý DomainEvents qua EventBus
+│   │       └── DomainEventsHandler.cs
 │   │
-│   ├── 🟥 HaiphongTech.Infrastructure/     # Tầng Hạ tầng (Technical)
-│   │   ├── 💾 Persistence/                # Lưu trữ dữ liệu
-│   │   │   ├── DbContext/
-│   │   │   │   ├── ApplicationDbContext.cs
-│   │   │   │   └── Configurations/       # EF Core configurations
-│   │   │   │       ├── SanPhamConfiguration.cs
-│   │   │   │       ├── DonHangConfiguration.cs
-│   │   │   │       └── KhachHangConfiguration.cs
-│   │   │   ├── Repositories/
-│   │   │   │   ├── EfRepository.cs       # Generic repository
-│   │   │   │   ├── SanPhamRepository.cs
-│   │   │   │   ├── DonHangRepository.cs
-│   │   │   │   └── KhachHangRepository.cs
-│   │   │   ├── Migrations/               # Database migrations
-│   │   │   ├── Seeds/                    # Initial data
-│   │   │   └── UnitOfWork.cs             # Unit of Work pattern
-│   │   │
-│   │   ├── 🌐 External/                   # Tích hợp bên ngoài
-│   │   │   ├── EmailService.cs           # Gửi email
-│   │   │   ├── PaymentService.cs         # Thanh toán
-│   │   │   ├── NotificationService.cs    # Thông báo
-│   │   │   └── FileStorageService.cs     # Lưu trữ file
-│   │   │
-│   │   ├── 📨 Messaging/                  # Message handling
-│   │   │   ├── EventBus.cs
-│   │   │   └── EventHandlers/
-│   │   │       ├── SanPhamEventHandlers.cs
-│   │   │       └── DonHangEventHandlers.cs
-│   │   │
-│   │   └── DependencyInjection.cs        # Infrastructure DI
-│   │
-│   └── 🟪 HaiphongTech.SharedKernel/      # Kernel dùng chung
-│       ├── 📋 Interfaces/                 # Common interfaces
-│       │   ├── IAggregateRoot.cs
-│       │   ├── IRepository.cs
-│       │   ├── IUnitOfWork.cs
-│       │   └── IDomainEvent.cs
-│       │
-│       ├── 🎯 Results/                    # Result pattern
-│       │   ├── Result.cs
-│       │   ├── Error.cs
-│       │   ├── ValidationResult.cs
-│       │   └── PagedResult.cs
-│       │
-│       ├── 📢 Events/                     # Base events
-│       │   ├── BaseDomainEvent.cs
-│       │   └── IEventHandler.cs
-│       │
-│       ├── 🔍 Specifications/             # Specification base
-│       │   ├── BaseSpecification.cs
+│   └── HaiphongTech.SharedKernel/ # 🟪 Shared Kernel (Chung)
+│       ├── Abstractions/         # Interface chung
 │       │   └── ISpecification.cs
-│       │
-│       ├── 🚫 Exceptions/                 # Common exceptions
-│       │   ├── DomainException.cs
-│       │   ├── ValidationException.cs
-│       │   ├── NotFoundException.cs
-│       │   └── BusinessRuleException.cs
-│       │
-│       └── 🛠️ Extensions/                 # Extension methods
-│           ├── StringExtensions.cs
-│           ├── DateTimeExtensions.cs
-│           └── EnumExtensions.cs
+│       ├── Results/              # Result<T> pattern
+│       │   └── Result.cs
+│       ├── Exceptions/           # Exception chung
+│       │   └── BusinessException.cs
+│       └── Utilities/            # Các tiện ích tĩnh
+│           └── Guard.cs
 │
-├── 🧪 tests/                              # Test projects
-│   ├── HaiphongTech.UnitTests/           # Unit tests
-│   │   ├── Domain/
-│   │   │   ├── Entities/
-│   │   │   ├── ValueObjects/
-│   │   │   └── Services/
-│   │   ├── Application/
-│   │   │   ├── Features/
-│   │   │   └── Behaviors/
-│   │   └── Infrastructure/
-│   │       └── Repositories/
-│   │
-│   ├── HaiphongTech.IntegrationTests/    # Integration tests
-│   │   ├── API/
-│   │   │   ├── SanPhamsControllerTests.cs
-│   │   │   └── DonHangsControllerTests.cs
-│   │   └── Infrastructure/
-│   │       └── DatabaseTests.cs
-│   │
-│   └── HaiphongTech.ArchitectureTests/   # Architecture tests
-│       └── ArchitectureTests.cs
+├── tests/                        # 🧪 Thư mục kiểm thử
+│   ├── HaiphongTech.Domain.Tests/          # Unit test Domain
+│   │   └── ProductIsActiveSpecificationTests.cs
+│   ├── HaiphongTech.Application.Tests/     # Test Handlers, Behaviors
+│   ├── HaiphongTech.Infrastructure.Tests/  # Test Repository với InMemoryDb
+│   └── HaiphongTech.API.Tests/             # Integration tests API
 │
-├── 📁 docs/                              # Documentation
-│   ├── architecture.md                   # Kiến trúc tổng thể
-│   ├── domain-model.md                   # Mô hình domain
-│   ├── api-documentation.md              # Tài liệu API
-│   └── deployment.md                     # Hướng dẫn triển khai
+├── build/                        # CI/CD, Docker, Scripts
+│   ├── Docker/
+│   │   └── docker-compose.yml
+│   ├── GitHubActions/
+│   │   └── ci.yml
+│   └── Scripts/
+│       └── init-clean-arch.ps1
 │
-├── 🐳 docker/                            # Docker configurations
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   └── docker-compose.override.yml
-│
-├── 🔧 scripts/                           # Build & deployment scripts
-│   ├── init-clean-architecture.ps1
-│   ├── build.ps1
-│   ├── test.ps1
-│   └── deploy.ps1
-│
-├── .editorconfig                          # Code formatting rules
-├── .gitignore                            # Git ignore rules
-├── Directory.Build.props                 # MSBuild properties
-├── README.md                             # Project documentation
-└── HaiphongTech.sln                      # Solution file
+└── docs/                         # 📄 Tài liệu, ADRs, API specs
+    ├── architecture.md
+    └── decisions/
 ```
 
 ### 🎯 Nguyên tắc tổ chức tối ưu
