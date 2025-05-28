@@ -86,97 +86,94 @@ Dự án được chia thành **5 projects chính** theo nguyên tắc Clean Arc
 ### 📁 Cây thư mục tổng quan
 
 ```
-HaiphongTech.sln                   # Solution file chính
+HaiphongTech.sln                              # Solution file chính
 │
-├── src/                          # Thư mục chứa mã nguồn
-│   
-│   ├── HaiphongTech.API/         # 🟦 Presentation Layer (Web API)
-│   │   ├── Controllers/          # Định nghĩa các endpoint REST
-│   │   │   └── ProductsController.cs
-│   │   ├── Middlewares/          # Xử lý lỗi, xác thực, logging
-│   │   │   └── ErrorHandlingMiddleware.cs
-│   │   ├── Filters/              # Action/Exception filters
-│   │   │   └── ValidationFilter.cs
-│   │   ├── Extensions/           # Đăng ký dịch vụ, Swagger
+├── src/                                     # Thư mục chứa mã nguồn
+│
+│   ├── HaiphongTech.API/                    # 🟦 Presentation Layer (Web API)
+│   │   ├── Controllers/                     # Định nghĩa các endpoint REST
+│   │   │   └── ProductsController.cs          
+│   │   ├── Middlewares/                     # Xử lý lỗi, xác thực, logging
+│   │   │   └── ErrorHandlingMiddleware.cs     
+│   │   ├── Filters/                         # Action/Exception filters
+│   │   │   └── ValidationFilter.cs            
+│   │   ├── Extensions/                      # Đăng ký dịch vụ, Swagger
 │   │   │   └── ServiceCollectionExtensions.cs
-│   │   └── Program.cs            # Điểm khởi động ứng dụng
-│   │
-│   ├── HaiphongTech.Application/ # 🟨 Application Layer (CQRS)
-│   │   ├── Behaviors/            # Pipeline behaviors MediatR
-│   │   │   └── ValidationBehavior.cs
-│   │   ├── Features/             # Chia theo tính năng (feature)
-│   │   │   └── Products/
-│   │   │       ├── Commands/     # Lệnh ghi dữ liệu
-│   │   │       │   └── CreateProduct/
-│   │   │       │       ├── CreateProductCommand.cs
-│   │   │       │       ├── CreateProductHandler.cs
-│   │   │       │       └── CreateProductValidator.cs
-│   │   │       ├── Queries/      # Truy vấn đọc dữ liệu
-│   │   │       │   └── GetProductById/
-│   │   │       │       ├── GetProductByIdQuery.cs
-│   │   │       │       ├── GetProductByIdHandler.cs
-│   │   │       │       └── GetProductByIdValidator.cs
-│   │   │       ├── DTOs/         # Đối tượng truyền dữ liệu giữa các tầng
-│   │   │       │   └── ProductDto.cs
-│   │   │       └── Mappings/     # AutoMapper profiles
-│   │   │           └── ProductProfile.cs
-│   │   └── Common/               # Các lớp chung trong Application
-│   │       └── Exceptions/
-│   │           └── ValidationException.cs
-│   │
-│   ├── HaiphongTech.Domain/      # 🟧 Domain Layer (Business Logic)
-│   │   ├── Entities/             # Các thực thể chính
-│   │   │   └── Product.cs
-│   │   ├── Aggregates/           # Aggregate roots
-│   │   │   └── OrderAggregate.cs
-│   │   ├── ValueObjects/         # Kiểu giá trị bất biến
-│   │   │   └── Money.cs
-│   │   ├── Events/               # Domain events
-│   │   │   └── ProductCreatedEvent.cs
-│   │   ├── Repositories/         # Interface repository
-│   │   │   └── IProductRepository.cs
-│   │   └── Specifications/       # Business-rule specifications
+│   │   └── Program.cs                       # Điểm khởi động ứng dụng
+│
+│   ├── HaiphongTech.Application/            # 🟨 Application Layer (CQRS)
+│   │   ├── Behaviors/                       # Pipeline behaviors MediatR
+│   │   │   └── ValidationBehavior.cs         
+│   │   ├── Features/                        # Chia theo tính năng (feature)
+│   │   │   └── Products/                    
+│   │   │       ├── Commands/                # Lệnh ghi dữ liệu
+│   │   │       │   └── CreateProduct/       
+│   │   │       │       ├── CreateProductCommand.cs       
+│   │   │       │       ├── CreateProductHandler.cs       
+│   │   │       │       └── CreateProductValidator.cs     
+│   │   │       ├── Queries/                 # Truy vấn đọc dữ liệu
+│   │   │       │   └── GetProductById/      
+│   │   │       │       ├── GetProductByIdQuery.cs        
+│   │   │       │       ├── GetProductByIdHandler.cs      
+│   │   │       │       └── GetProductByIdValidator.cs    
+│   │   │       ├── DTOs/                    # Đối tượng truyền dữ liệu giữa các tầng
+│   │   │       │   └── ProductDto.cs         
+│   │   │       └── Mappings/                # AutoMapper profiles
+│   │   │           └── ProductProfile.cs     
+│   │   └── Common/                          # Các lớp chung trong Application
+│   │       └── Exceptions/                  # Lỗi chung (ValidationException)
+│   │           └── ValidationException.cs   
+│
+│   ├── HaiphongTech.Domain/                # 🟧 Domain Layer (Business Logic)
+│   │   ├── Entities/                       # Các thực thể chính
+│   │   │   └── Product.cs                   
+│   │   ├── Aggregates/                     # Aggregate roots
+│   │   │   └── OrderAggregate.cs            
+│   │   ├── ValueObjects/                   # Kiểu giá trị bất biến
+│   │   │   └── Money.cs                     
+│   │   ├── Events/                         # Domain events
+│   │   │   └── ProductCreatedEvent.cs       
+│   │   ├── Repositories/                   # Interface repository
+│   │   │   └── IProductRepository.cs        
+│   │   └── Specifications/                 # Business-rule specifications
 │   │       ├── ProductIsActiveSpecification.cs
 │   │       └── ProductPriceBetweenSpecification.cs
-│   │
-│   ├── HaiphongTech.Infrastructure/ # 🟥 Infrastructure Layer
-│   │   ├── Persistence/          # Cơ chế lưu trữ dữ liệu
-│   │   │   ├── DbContexts/       # DbContext EF Core
-│   │   │   │   └── ApplicationDbContext.cs
-│   │   │   ├── Repositories/     # Triển khai Repository
-│   │   │   │   └── ProductRepository.cs
-│   │   │   └── Migrations/       # Migrations EF Core
-│   │   ├── External/             # Service ngoài (Mail, Payment)
-│   │   │   └── EmailService.cs
-│   │   └── Messaging/            # Xử lý DomainEvents qua EventBus
-│   │       └── DomainEventsHandler.cs
-│   │
-│   └── HaiphongTech.SharedKernel/ # 🟪 Shared Kernel (Chung)
-│       ├── Abstractions/         # Interface chung
-│       │   └── ISpecification.cs
-│       ├── Results/              # Result<T> pattern
-│       │   └── Result.cs
-│       ├── Exceptions/           # Exception chung
-│       │   └── BusinessException.cs
-│       └── Utilities/            # Các tiện ích tĩnh
-│           └── Guard.cs
 │
-├── tests/                        # 🧪 Thư mục kiểm thử
-│   ├── HaiphongTech.Domain.Tests/          # Unit test Domain
-│   │   └── ProductIsActiveSpecificationTests.cs
-│   ├── HaiphongTech.Application.Tests/     # Test Handlers, Behaviors
-│   ├── HaiphongTech.Infrastructure.Tests/  # Test Repository với InMemoryDb
-│   └── HaiphongTech.API.Tests/             # Integration tests API
+│   ├── HaiphongTech.Infrastructure/         # 🟥 Infrastructure Layer
+│   │   ├── Persistence/                    # Cơ chế lưu trữ dữ liệu
+│   │   │   ├── DbContexts/                 # DbContext EF Core
+│   │   │   │   └── ApplicationDbContext.cs  
+│   │   │   ├── Repositories/               # Triển khai Repository
+│   │   │   │   └── ProductRepository.cs     
+│   │   │   └── Migrations/                 # Migrations EF Core
+│   │   ├── External/                       # Service ngoài (Mail, Payment)
+│   │   │   └── EmailService.cs              
+│   │   └── Messaging/                      # Xử lý DomainEvents qua EventBus
+│   │       └── DomainEventsHandler.cs       
 │
-├── build/                        # CI/CD, Docker, Scripts
-│   ├── Docker/
-│   │   └── docker-compose.yml
-│   ├── GitHubActions/
-│   │   └── ci.yml
-│   └── Scripts/
-│       └── init-clean-arch.ps1
+│   └── HaiphongTech.SharedKernel/          # 🟪 Shared Kernel (Chung)
+│       ├── Abstractions/                   # Interface chung
+│       │   └── ISpecification.cs            
+│       ├── Results/                        # Result<T> pattern
+│       │   └── Result.cs                    
+│       ├── Exceptions/                     # Exception chung
+│       │   └── BusinessException.cs         
+│       └── Utilities/                      # Các tiện ích tĩnh
+│           └── Guard.cs                     
 │
-└── docs/                         # 📄 Tài liệu, ADRs, API specs
+└── tests/                                  # 🧪 Thư mục kiểm thử
+    ├── HaiphongTech.Domain.Tests/          # Unit test Domain
+    │   └── ProductIsActiveSpecificationTests.cs
+    ├── HaiphongTech.Application.Tests/     # Test Handlers, Behaviors
+    ├── HaiphongTech.Infrastructure.Tests/  # Test Repository với InMemoryDb
+    └── HaiphongTech.API.Tests/            # Integration tests API
+
+build/                                     # CI/CD, Docker, Scripts
+    ├── Docker/                            # docker-compose.yml
+    ├── GitHubActions/                     # ci.yml
+    └── Scripts/                           # init-clean-arch.ps1
+
+docs/                                     # 📄 Tài liệu, ADRs, API specs
     ├── architecture.md
     └── decisions/
 ```
