@@ -1,0 +1,65 @@
+## 🔧 Build artifacts
+bin/
+obj/
+out/
+
+## 🧪 Test results
+TestResults/
+*.trx
+*.coverage
+*.log
+
+## ⚙️ User-specific files
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## 💡 Auto-generated files
+*.generated.cs
+*.g.cs
+*.g.i.cs
+
+## 📦 NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+## 📚 Entity Framework
+Migrations/
+*.dbmdl
+*.bak
+*.mdf
+*.ldf
+
+## 🔒 Secrets (chỉ nếu dùng `dotnet user-secrets`)
+secrets.json
+
+## 💻 Visual Studio
+.vs/
+*.csproj.user
+
+## 🧼 Rider
+.idea/
+*.sln.iml
+
+## 📄 Logs & Cache
+*.log
+*.tlog
+*.cache
+*.tmp
+
+## 🧪 Coverage
+coverage/
+*.coveragexml
+*.lcov
+*.html
+
+## 📄 Config dump
+appsettings.Development.json
+appsettings.*.json.local
