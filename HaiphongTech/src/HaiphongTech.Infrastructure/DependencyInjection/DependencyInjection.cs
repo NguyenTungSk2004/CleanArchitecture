@@ -5,6 +5,8 @@ using HaiphongTech.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using HaiphongTech.SharedKernel.Interfaces;
 using HaiphongTech.Infrastructure.Services;
+using HaiphongTech.Domain.Repositories;
+using HaiphongTech.Infrastructure.Repositories.Products;
 
 public static class DependencyInjection
 {
@@ -12,9 +14,8 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString)); // hoặc UseNpgsql, UseSqlite...
-
-        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
+        
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICurrentUser, CurrentUser>();
 
         return services;
