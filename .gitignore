@@ -1,18 +1,18 @@
 ## Build artifacts
-bin/
-obj/
-out/
-*.dll
-*.exe
-*.pdb
-*.app
-*.so
-*.dylib
+**/bin/
+**/obj/
+**/out/
+**/*.dll
+**/*.exe
+**/*.pdb
+**/*.app
+**/*.so
+**/*.dylib
 
 ## User-specific files
-*.user
-*.userosscache
-*.suo
+**/*.user
+**/*.userosscache
+**/*.suo
 *.sln.docstates
 *.csproj.user
 
