@@ -4,11 +4,11 @@ using MediatR;
 using HaiphongTech.Domain.Repositories;
 using HaiphongTech.Domain.Entities.Products.ProductAggregate;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
+public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
 {
     private readonly IProductRepository _productRepository;
 
-    public CreateProductCommandHandler(IProductRepository productRepository)
+    public CreateProductHandler(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
