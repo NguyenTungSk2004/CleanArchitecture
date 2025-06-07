@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using HaiphongTech.Application.Features.Products.Commands.CreateProduct;
+using HaiphongTech.Application.Services.Products.Commands.CreateProduct;
 using MediatR;
 
 namespace HaiphongTech.WebAPI.Controllers;

@@ -28,6 +28,9 @@ dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.cs
 dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Ardalis.Specification.EntityFrameworkCore
 dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Microsoft.AspNetCore.Http.Abstractions
+dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Microsoft.EntityFrameworkCore.Design
+dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Microsoft.Extensions.Configuration
+dotnet add "$basePath\HaiphongTech.Infrastructure\HaiphongTech.Infrastructure.csproj" package Microsoft.Extensions.Configuration.Json
 
 # ----------------------------
 # API Layer

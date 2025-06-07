@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HaiphongTech.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb5fa64abbd4ad680f090c628ef73afaa3b5ffad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a62a35f8d7361b43bad985cf9a70be6a7d8f5a96")]
 [assembly: System.Reflection.AssemblyProductAttribute("HaiphongTech.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HaiphongTech.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
