@@ -90,11 +90,11 @@ public class Product : EntityBase, IAggregateRoot
         }
     }
 
-    public void MarkAsPreOrder(int updateBy, string waitingTime, int quantity)
+    public void MarkAsPreOrder(int updateBy, PreOrderInfo preOrderInfo)
     {
         try
         {
-            PreOrderInfo = new PreOrderInfo(waitingTime, quantity);
+            PreOrderInfo = preOrderInfo;
             SetUpdated(updateBy);
         }
         catch (Exception ex)
