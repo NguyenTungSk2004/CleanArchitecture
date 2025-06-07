@@ -1,28 +1,44 @@
-## 🔧 Build artifacts
+## Build artifacts
 bin/
 obj/
 out/
+*.dll
+*.exe
+*.pdb
+*.app
+*.so
+*.dylib
 
-## 🧪 Test results
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.csproj.user
+
+## Visual Studio
+.vs/
+.vscode/
+*.sln.iml
+
+## Rider
+.idea/
+
+## Test results
 TestResults/
 *.trx
 *.coverage
+*.coveragexml
+
+## Logs
 *.log
 
-## ⚙️ User-specific files
-.vscode/
-.idea/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-## 💡 Auto-generated files
-*.generated.cs
+## Auto-generated files
 *.g.cs
 *.g.i.cs
+*.generated.cs
 
-## 📦 NuGet
+## NuGet
 *.nupkg
 *.snupkg
 *.nuspec
@@ -30,36 +46,21 @@ packages/
 project.lock.json
 project.fragment.lock.json
 
-## 📚 Entity Framework
+## Entity Framework
 Migrations/
 *.dbmdl
 *.bak
 *.mdf
 *.ldf
 
-## 🔒 Secrets (chỉ nếu dùng `dotnet user-secrets`)
+## Secrets
 secrets.json
 
-## 💻 Visual Studio
-.vs/
-*.csproj.user
-
-## 🧼 Rider
-.idea/
-*.sln.iml
-
-## 📄 Logs & Cache
-*.log
-*.tlog
-*.cache
-*.tmp
-
-## 🧪 Coverage
+## Coverage
 coverage/
-*.coveragexml
 *.lcov
 *.html
 
-## 📄 Config dump
+## Config dump
 appsettings.Development.json
 appsettings.*.json.local
