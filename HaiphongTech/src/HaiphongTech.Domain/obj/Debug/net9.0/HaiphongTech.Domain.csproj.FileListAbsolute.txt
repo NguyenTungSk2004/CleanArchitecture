@@ -1,0 +1,16 @@
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\bin\Debug\net9.0\HaiphongTech.Domain.deps.json
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\bin\Debug\net9.0\HaiphongTech.Domain.dll
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\bin\Debug\net9.0\HaiphongTech.Domain.pdb
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\bin\Debug\net9.0\HaiphongTech.SharedKernel.dll
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\bin\Debug\net9.0\HaiphongTech.SharedKernel.pdb
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.csproj.AssemblyReference.cache
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.AssemblyInfoInputs.cache
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.AssemblyInfo.cs
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.csproj.CoreCompileInputs.cache
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.sourcelink.json
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\Haiphong.4155E4B5.Up2Date
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.dll
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\refint\HaiphongTech.Domain.dll
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\HaiphongTech.Domain.pdb
+D:\MyProject\HaiphongTech\src\HaiphongTech.Domain\obj\Debug\net9.0\ref\HaiphongTech.Domain.dll

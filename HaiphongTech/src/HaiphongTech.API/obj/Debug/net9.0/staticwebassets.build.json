@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "VbXlGWdfY8FqYT2DfIZRF/WRyzy+N0TcuEYjzPguCXM=",
+  "Source": "HaiphongTech.API",
+  "BasePath": "_content/HaiphongTech.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
