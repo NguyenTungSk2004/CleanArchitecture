@@ -8,6 +8,7 @@
 **/*.app
 **/*.so
 **/*.dylib
+*.assets.cache
 
 ## User-specific files
 **/*.user
