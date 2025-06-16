@@ -8,7 +8,12 @@
 **/*.app
 **/*.so
 **/*.dylib
+# MSBuild cache
 *.assets.cache
+
+# NuGet restore files
+*.nuget.dgspec.json
+project.assets.json
 
 ## User-specific files
 **/*.user
