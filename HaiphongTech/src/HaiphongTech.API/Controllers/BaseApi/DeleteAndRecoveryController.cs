@@ -4,7 +4,6 @@ using HaiphongTech.Application.Services.BaseServices.SoftDelete;
 using HaiphongTech.SharedKernel.Base;
 using HaiphongTech.SharedKernel.Interfaces;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HaiphongTech.API.Controllers.BaseApi

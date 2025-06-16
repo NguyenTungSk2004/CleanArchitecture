@@ -7,11 +7,6 @@ using HaiphongTech.SharedKernel.Interfaces;
 using HaiphongTech.Infrastructure.Services;
 using HaiphongTech.Domain.Repositories;
 using HaiphongTech.Infrastructure.Repositories.Products;
-using MediatR;
-using HaiphongTech.Application.Services.BaseServices.SoftDelete;
-using HaiphongTech.SharedKernel.Base;
-using HaiphongTech.Domain.Entities.Products.ProductAggregate;
-
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
