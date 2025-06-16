@@ -41,3 +41,4 @@ dotnet add "$basePath\HaiphongTech.API\HaiphongTech.API.csproj" package FluentVa
 dotnet add "$basePath\HaiphongTech.API\HaiphongTech.API.csproj" package Swashbuckle.AspNetCore
 dotnet add "$basePath\HaiphongTech.API\HaiphongTech.API.csproj" package Mapster
 dotnet add "$basePath\HaiphongTech.API\HaiphongTech.API.csproj" package Mapster.DependencyInjection
+dotnet add "$basePath\HaiphongTech.API\HaiphongTech.API.csproj" package Microsoft.AspNetCore.Authentication.JwtBearer

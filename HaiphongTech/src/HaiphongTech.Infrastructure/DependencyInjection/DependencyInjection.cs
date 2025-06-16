@@ -7,6 +7,10 @@ using HaiphongTech.SharedKernel.Interfaces;
 using HaiphongTech.Infrastructure.Services;
 using HaiphongTech.Domain.Repositories;
 using HaiphongTech.Infrastructure.Repositories.Products;
+using MediatR;
+using HaiphongTech.Application.Services.BaseServices.SoftDelete;
+using HaiphongTech.SharedKernel.Base;
+using HaiphongTech.Domain.Entities.Products.ProductAggregate;
 
 public static class DependencyInjection
 {
@@ -14,7 +18,8 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString)); // hoặc UseNpgsql, UseSqlite...
-        
+
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICurrentUser, CurrentUser>();
 

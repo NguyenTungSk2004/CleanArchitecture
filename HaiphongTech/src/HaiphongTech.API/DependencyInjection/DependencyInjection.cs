@@ -18,7 +18,7 @@ public static class DependencyInjection
         {
             cfg.RegisterServicesFromAssembly(Assembly.Load("HaiphongTech.Application"));
         });
-        
+
         return services;
     }
 }
