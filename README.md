@@ -86,11 +86,11 @@ Dự án được chia thành **5 projects chính** theo nguyên tắc Clean Arc
 ### 📁 Cây thư mục tổng quan
 
 ```
-HaiphongTech.sln                              # Solution file chính
+sln                              # Solution file chính
 │
 ├── src/                                     # Thư mục chứa mã nguồn
 │
-│   ├── HaiphongTech.API/                    # 🟦 Presentation Layer (Web API)
+│   ├── API/                    # 🟦 Presentation Layer (Web API)
 │   │   ├── Controllers/                     # Định nghĩa các endpoint REST
 │   │   │   └── ProductsController.cs          
 │   │   ├── Middlewares/                     # Xử lý lỗi, xác thực, logging
@@ -101,7 +101,7 @@ HaiphongTech.sln                              # Solution file chính
 │   │   │   └── ServiceCollectionExtensions.cs
 │   │   └── Program.cs                       # Điểm khởi động ứng dụng
 │
-│   ├── HaiphongTech.Application/            # 🟨 Application Layer (CQRS)
+│   ├── Application/            # 🟨 Application Layer (CQRS)
 │   │   ├── Behaviors/                       # Pipeline behaviors MediatR
 │   │   │   └── ValidationBehavior.cs         
 │   │   ├── Features/                        # Chia theo tính năng (feature)
@@ -124,7 +124,7 @@ HaiphongTech.sln                              # Solution file chính
 │   │       └── Exceptions/                  # Lỗi chung (ValidationException)
 │   │           └── ValidationException.cs   
 │
-│   ├── HaiphongTech.Domain/                # 🟧 Domain Layer (Business Logic)
+│   ├── Domain/                # 🟧 Domain Layer (Business Logic)
 │   │   ├── Entities/                       # Các thực thể chính
 │   │   │   └── Product.cs                   
 │   │   ├── Aggregates/                     # Aggregate roots
@@ -139,7 +139,7 @@ HaiphongTech.sln                              # Solution file chính
 │   │       ├── ProductIsActiveSpecification.cs
 │   │       └── ProductPriceBetweenSpecification.cs
 │
-│   ├── HaiphongTech.Infrastructure/         # 🟥 Infrastructure Layer
+│   ├── Infrastructure/         # 🟥 Infrastructure Layer
 │   │   ├── Persistence/                    # Cơ chế lưu trữ dữ liệu
 │   │   │   ├── DbContexts/                 # DbContext EF Core
 │   │   │   │   └── ApplicationDbContext.cs  
@@ -151,7 +151,7 @@ HaiphongTech.sln                              # Solution file chính
 │   │   └── Messaging/                      # Xử lý DomainEvents qua EventBus
 │   │       └── DomainEventsHandler.cs       
 │
-│   └── HaiphongTech.SharedKernel/          # 🟪 Shared Kernel (Chung)
+│   └── SharedKernel/          # 🟪 Shared Kernel (Chung)
 │       ├── Abstractions/                   # Interface chung
 │       │   └── ISpecification.cs            
 │       ├── Results/                        # Result<T> pattern
@@ -162,11 +162,11 @@ HaiphongTech.sln                              # Solution file chính
 │           └── Guard.cs                     
 │
 └── tests/                                  # 🧪 Thư mục kiểm thử
-    ├── HaiphongTech.Domain.Tests/          # Unit test Domain
+    ├── Domain.Tests/          # Unit test Domain
     │   └── ProductIsActiveSpecificationTests.cs
-    ├── HaiphongTech.Application.Tests/     # Test Handlers, Behaviors
-    ├── HaiphongTech.Infrastructure.Tests/  # Test Repository với InMemoryDb
-    └── HaiphongTech.API.Tests/            # Integration tests API
+    ├── Application.Tests/     # Test Handlers, Behaviors
+    ├── Infrastructure.Tests/  # Test Repository với InMemoryDb
+    └── API.Tests/            # Integration tests API
 
 build/                                     # CI/CD, Docker, Scripts
     ├── Docker/                            # docker-compose.yml
@@ -518,7 +518,7 @@ SharedKernel/
 
 ```csharp
 // Results/Result.cs
-namespace HaiphongTech.SharedKernel.Results;
+namespace SharedKernel.Results;
 
 public class Result<T>
 {
@@ -560,7 +560,7 @@ public record Error(string Ma, string ThongBao)
 
 ```csharp
 // Interfaces/IAggregateRoot.cs
-namespace HaiphongTech.SharedKernel.Interfaces;
+namespace SharedKernel.Interfaces;
 
 /// <summary>
 /// Đánh dấu một entity là Aggregate Root theo DDD
@@ -573,7 +573,7 @@ public interface IAggregateRoot
 // Interfaces/IRepository.cs
 using Ardalis.Specification;
 
-namespace HaiphongTech.SharedKernel.Interfaces;
+namespace SharedKernel.Interfaces;
 
 public interface IRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot
 {
@@ -605,7 +605,7 @@ public interface IRepository<T> : IRepositoryBase<T> where T : class, IAggregate
 // Events/BaseDomainEvent.cs
 using MediatR;
 
-namespace HaiphongTech.SharedKernel.Events;
+namespace SharedKernel.Events;
 
 public abstract record BaseDomainEvent : INotification
 {
@@ -617,7 +617,7 @@ public abstract record BaseDomainEvent : INotification
 // Events/IEventHandler.cs
 using MediatR;
 
-namespace HaiphongTech.SharedKernel.Events;
+namespace SharedKernel.Events;
 
 public interface IEventHandler<in TSuKien> : INotificationHandler<TSuKien>
     where TSuKien : BaseDomainEvent
@@ -632,7 +632,7 @@ public interface IEventHandler<in TSuKien> : INotificationHandler<TSuKien>
 // Specifications/ISpecification.cs
 using System.Linq.Expressions;
 
-namespace HaiphongTech.SharedKernel.Specifications;
+namespace SharedKernel.Specifications;
 
 public interface ISpecification<T>
 {
@@ -651,7 +651,7 @@ public interface ISpecification<T>
 
 ```csharp
 // Extensions/StringExtensions.cs
-namespace HaiphongTech.SharedKernel.Extensions;
+namespace SharedKernel.Extensions;
 
 public static class StringExtensions
 {
@@ -758,11 +758,11 @@ Domain/
 
 ```csharp
 // Entities/SanPham.cs
-using HaiphongTech.SharedKernel.Interfaces;
-using HaiphongTech.Domain.ValueObjects;
-using HaiphongTech.Domain.DomainEvents;
+using SharedKernel.Interfaces;
+using Domain.ValueObjects;
+using Domain.DomainEvents;
 
-namespace HaiphongTech.Domain.Entities;
+namespace Domain.Entities;
 
 public class SanPham : BaseEntity, IAggregateRoot
 {
@@ -850,7 +850,7 @@ public class SanPham : BaseEntity, IAggregateRoot
 
 ```csharp
 // ValueObjects/TienTe.cs
-namespace HaiphongTech.Domain.ValueObjects;
+namespace Domain.ValueObjects;
 
 public class TienTe : ValueObject
 {
@@ -1071,7 +1071,7 @@ Khi nào cần định nghĩa repository đặc thù `I<Entity>Repository` tron
 
 ---
 
-### 3. 🟨 Application Layer (HaiphongTech.Application)
+### 3. 🟨 Application Layer (Application)
 
 **Cấu trúc thư mục thực tế:**
 
@@ -1227,7 +1227,7 @@ public record CreateProductDto(
 
 ---
 
-### 4. 🟥 Infrastructure Layer (HaiphongTech.Infrastructure)
+### 4. 🟥 Infrastructure Layer (Infrastructure)
 
 **Cấu trúc thư mục thực tế:**
 
@@ -1262,10 +1262,10 @@ Infrastructure/
 ```csharp
 // Persistence/Repositories/EfRepository.cs
 using Ardalis.Specification.EntityFrameworkCore;
-using HaiphongTech.SharedKernel.Specifications;
+using SharedKernel.Specifications;
 using Microsoft.EntityFrameworkCore;
 
-namespace HaiphongTech.Infrastructure.Persistence.Repositories;
+namespace Infrastructure.Persistence.Repositories;
 
 public class EfRepository<T> : RepositoryBase<T>, IRepository<T> where T : class, IAggregateRoot
 {
@@ -1383,7 +1383,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
 ---
 
-### 5. 🟦 API Layer (HaiphongTech.API)
+### 5. 🟦 API Layer (API)
 
 **Cấu trúc thư mục thực tế:**
 
@@ -1782,10 +1782,10 @@ public class ProductsControllerTests : IClassFixture<WebApplicationFactory<Progr
 ### Database Migrations
 ```bash
 # Add migration
-dotnet ef migrations add InitialCreate --project HaiphongTech.Infrastructure --startup-project HaiphongTech.API
+dotnet ef migrations add InitialCreate --project Infrastructure --startup-project API
 
 # Update database
-dotnet ef database update --project HaiphongTech.Infrastructure --startup-project HaiphongTech.API
+dotnet ef database update --project Infrastructure --startup-project API
 ```
 
 ### Docker Support
@@ -1798,24 +1798,24 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["src/HaiphongTech.API/HaiphongTech.API.csproj", "src/HaiphongTech.API/"]
-COPY ["src/HaiphongTech.Application/HaiphongTech.Application.csproj", "src/HaiphongTech.Application/"]
-COPY ["src/HaiphongTech.Domain/HaiphongTech.Domain.csproj", "src/HaiphongTech.Domain/"]
-COPY ["src/HaiphongTech.Infrastructure/HaiphongTech.Infrastructure.csproj", "src/HaiphongTech.Infrastructure/"]
-COPY ["src/HaiphongTech.SharedKernel/HaiphongTech.SharedKernel.csproj", "src/HaiphongTech.SharedKernel/"]
+COPY ["src/API/API.csproj", "src/API/"]
+COPY ["src/Application/Application.csproj", "src/Application/"]
+COPY ["src/Domain/Domain.csproj", "src/Domain/"]
+COPY ["src/Infrastructure/Infrastructure.csproj", "src/Infrastructure/"]
+COPY ["src/SharedKernel/SharedKernel.csproj", "src/SharedKernel/"]
 
-RUN dotnet restore "src/HaiphongTech.API/HaiphongTech.API.csproj"
+RUN dotnet restore "src/API/API.csproj"
 COPY . .
-WORKDIR "/src/src/HaiphongTech.API"
-RUN dotnet build "HaiphongTech.API.csproj" -c Release -o /app/build
+WORKDIR "/src/src/API"
+RUN dotnet build "API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "HaiphongTech.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HaiphongTech.API.dll"]
+ENTRYPOINT ["dotnet", "API.dll"]
 ```
 
 ---
@@ -1884,7 +1884,7 @@ public class ProductReadModel
 ### 🚀 Khởi tạo dự án
 ```bash
 # Clone repository
-git clone https://github.com/your-repo/HaiphongTech.git
+git clone https://github.com/your-repo/git
 cd HaiphongTech
 
 # Chạy script khởi tạo
@@ -1900,7 +1900,7 @@ dotnet build
 dotnet test
 
 # Start API
-dotnet run --project src/HaiphongTech.API
+dotnet run --project src/API
 ```
 
 ### 🗄️ Cấu hình Database
@@ -1915,10 +1915,10 @@ dotnet run --project src/HaiphongTech.API
 
 ```bash
 # Tạo migration đầu tiên
-dotnet ef migrations add InitialCreate --project src/HaiphongTech.Infrastructure --startup-project src/HaiphongTech.API
+dotnet ef migrations add InitialCreate --project src/Infrastructure --startup-project src/API
 
 # Update database
-dotnet ef database update --project src/HaiphongTech.Infrastructure --startup-project src/HaiphongTech.API
+dotnet ef database update --project src/Infrastructure --startup-project src/API
 ```
 
 ---
