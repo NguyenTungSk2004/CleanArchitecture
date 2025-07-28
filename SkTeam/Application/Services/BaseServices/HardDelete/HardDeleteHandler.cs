@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using SharedKernel.Base;
 using SharedKernel.Exceptions;
 using SharedKernel.Interfaces;

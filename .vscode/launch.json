@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "coreclr",
+        "request": "launch",
+        "name": "Launch ASP.NET Core Web API",
+        "program": "${workspaceFolder}/SkTeam/API/bin/Debug/net9.0/API.dll",
+        "args": ["--urls", "http://localhost:5025"],
+        "cwd": "${workspaceFolder}/SkTeam/API",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+          "action": "openExternally",
+          "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        },
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "preLaunchTask": "build"
+      }
+    ]
+  }
