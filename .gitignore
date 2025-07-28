@@ -24,7 +24,6 @@ project.assets.json
 
 ## Visual Studio
 .vs/
-.vscode/
 *.sln.iml
 
 ## Rider

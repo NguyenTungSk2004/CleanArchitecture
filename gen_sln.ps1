@@ -3,7 +3,7 @@
 # Yêu cầu: dotnet CLI đã cài đặt
 
 # Đặt tên solution
-$solutionName = "SkTeam"
+$solutionName = "CleanArchitecture"
 $solutionFile = "$solutionName.sln"
 
 # Xóa file .sln cũ nếu tồn tại
