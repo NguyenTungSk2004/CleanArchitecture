@@ -1,6 +1,6 @@
 # Clean Architecture Project Generator
 
-$solutionName = "HaiphongTech"
+$solutionName = "SkTeam"
 $root = "$PWD/$solutionName"
 
 # 1. Create solution folder and solution file
@@ -11,62 +11,61 @@ cd $solutionName
 dotnet new sln -n $solutionName
 
 # 2. Create project folders
-mkdir src
-mkdir src/$solutionName.API
-mkdir src/$solutionName.Application
-mkdir src/$solutionName.Domain
-mkdir src/$solutionName.Infrastructure
-mkdir src/$solutionName.SharedKernel
+mkdir $solutionName.API
+mkdir $solutionName.Application
+mkdir $solutionName.Domain
+mkdir $solutionName.Infrastructure
+mkdir $solutionName.SharedKernel
 
 # 3. Create base projects
-dotnet new webapi -n "$solutionName.API" -o "src/$solutionName.API"
-dotnet new classlib -n "$solutionName.Application" -o "src/$solutionName.Application"
-dotnet new classlib -n "$solutionName.Domain" -o "src/$solutionName.Domain"
-dotnet new classlib -n "$solutionName.Infrastructure" -o "src/$solutionName.Infrastructure"
-dotnet new classlib -n "$solutionName.SharedKernel" -o "src/$solutionName.SharedKernel"
+dotnet new webapi -n "$solutionName.API" -o "$solutionName.API"
+dotnet new classlib -n "$solutionName.Application" -o "$solutionName.Application"
+dotnet new classlib -n "$solutionName.Domain" -o "$solutionName.Domain"
+dotnet new classlib -n "$solutionName.Infrastructure" -o "$solutionName.Infrastructure"
+dotnet new classlib -n "$solutionName.SharedKernel" -o "$solutionName.SharedKernel"
 dotnet new xunit -n "$solutionName.UnitTests" -o "tests/$solutionName.UnitTests"
 dotnet new xunit -n "$solutionName.IntegrationTests" -o "tests/$solutionName.IntegrationTests"
 
 # 4. Add project references
-dotnet sln add "src/$solutionName.API/$solutionName.API.csproj"
-dotnet sln add "src/$solutionName.Application/$solutionName.Application.csproj"
-dotnet sln add "src/$solutionName.Domain/$solutionName.Domain.csproj"
-dotnet sln add "src/$solutionName.Infrastructure/$solutionName.Infrastructure.csproj"
-dotnet sln add "src/$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
+dotnet sln add "$solutionName.API/$solutionName.API.csproj"
+dotnet sln add "$solutionName.Application/$solutionName.Application.csproj"
+dotnet sln add "$solutionName.Domain/$solutionName.Domain.csproj"
+dotnet sln add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj"
+dotnet sln add "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
 
 # Add references between projects
-dotnet add "src/$solutionName.API/$solutionName.API.csproj" reference "src/$solutionName.Application/$solutionName.Application.csproj"
-dotnet add "src/$solutionName.API/$solutionName.API.csproj" reference "src/$solutionName.Infrastructure/$solutionName.Infrastructure.csproj"
-dotnet add "src/$solutionName.Application/$solutionName.Application.csproj" reference "src/$solutionName.Domain/$solutionName.Domain.csproj"
-dotnet add "src/$solutionName.Application/$solutionName.Application.csproj" reference "src/$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
-dotnet add "src/$solutionName.Domain/$solutionName.Domain.csproj" reference "src/$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
-dotnet add "src/$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "src/$solutionName.Application/$solutionName.Application.csproj"
-dotnet add "src/$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "src/$solutionName.Domain/$solutionName.Domain.csproj"
-dotnet add "src/$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "src/$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
+dotnet add "$solutionName.API/$solutionName.API.csproj" reference "$solutionName.Application/$solutionName.Application.csproj"
+dotnet add "$solutionName.API/$solutionName.API.csproj" reference "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj"
+dotnet add "$solutionName.Application/$solutionName.Application.csproj" reference "$solutionName.Domain/$solutionName.Domain.csproj"
+dotnet add "$solutionName.Application/$solutionName.Application.csproj" reference "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
+dotnet add "$solutionName.Domain/$solutionName.Domain.csproj" reference "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
+dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.Application/$solutionName.Application.csproj"
+dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.Domain/$solutionName.Domain.csproj"
+dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
 
 # 5. Create common folder structure for each project
-mkdir src/$solutionName.Domain/Entities
-mkdir src/$solutionName.Domain/ValueObjects
-mkdir src/$solutionName.Domain/Events
-mkdir src/$solutionName.Domain/Repositories
-mkdir src/$solutionName.Domain/Services
+mkdir $solutionName.Domain/Entities
+mkdir $solutionName.Domain/ValueObjects
+mkdir $solutionName.Domain/Events
+mkdir $solutionName.Domain/Repositories
+mkdir $solutionName.Domain/Services
 
-mkdir src/$solutionName.Application/Features
-mkdir src/$solutionName.Application/Common
-mkdir src/$solutionName.Application/Interfaces
-mkdir src/$solutionName.Application/Behaviors
-mkdir src/$solutionName.Application/DTOs
+mkdir $solutionName.Application/Features
+mkdir $solutionName.Application/Common
+mkdir $solutionName.Application/Interfaces
+mkdir $solutionName.Application/Behaviors
+mkdir $solutionName.Application/DTOs
 
-mkdir src/$solutionName.Infrastructure/Persistence
-mkdir src/$solutionName.Infrastructure/Repositories
-mkdir src/$solutionName.Infrastructure/Services
-mkdir src/$solutionName.Infrastructure/DependencyInjection
+mkdir $solutionName.Infrastructure/Persistence
+mkdir $solutionName.Infrastructure/Repositories
+mkdir $solutionName.Infrastructure/Services
+mkdir $solutionName.Infrastructure/DependencyInjection
 
-mkdir src/$solutionName.API/Controllers
-mkdir src/$solutionName.API/DependencyInjection
-mkdir src/$solutionName.API/Filters
+mkdir $solutionName.API/Controllers
+mkdir $solutionName.API/DependencyInjection
+mkdir $solutionName.API/Filters
 
-mkdir src/$solutionName.SharedKernel/Base
-mkdir src/$solutionName.SharedKernel/Events
-mkdir src/$solutionName.SharedKernel/Interfaces
-mkdir src/$solutionName.SharedKernel/Specifications
+mkdir $solutionName.SharedKernel/Base
+mkdir $solutionName.SharedKernel/Events
+mkdir $solutionName.SharedKernel/Interfaces
+mkdir $solutionName.SharedKernel/Specifications
