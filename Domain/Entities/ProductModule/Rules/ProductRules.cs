@@ -17,6 +17,7 @@ namespace Domain.Entities.ProductModule.Rules
             {
                 var currentTier = priceTiers[i];
                 var previousTier = priceTiers[i - 1];
+                if (currentTier.Quantity <= 0 && currentTier.Price <= 0) continue;
 
                 if (currentTier.Quantity <= previousTier.Quantity)
                     throw new BusinessRuleViolationException($"Số lượng bậc giá {i + 1} phải lớn hơn bậc {i}");

@@ -44,6 +44,6 @@ public class ProductsController : BaseDeleteAndRecoveryController<
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id) => Ok();
+    public IActionResult GetById(int id) => Ok();
     
 }
