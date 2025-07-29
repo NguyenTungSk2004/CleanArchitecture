@@ -1,10 +1,9 @@
-using Application.Services.BaseServices.HardDelete;
-using Application.Services.BaseServices.Recovery;
-using Application.Services.BaseServices.SoftDelete;
-using SharedKernel.Base;
 using SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.UseCases.BaseServices.SoftDelete;
+using Application.UseCases.BaseServices.HardDelete;
+using Application.UseCases.BaseServices.Recovery;
 
 namespace API.Controllers.BaseApi
 {
@@ -13,14 +12,17 @@ namespace API.Controllers.BaseApi
   /// </summary>
   /// <typeparam name="TService">LocalService tương ứng</typeparam>
   /// <typeparam name="TEntity">Entitiy tương ứng</typeparam>
-  public abstract class BaseDeleteAndRecoveryController<TEntity> : ControllerBase
-    where TEntity : EntityBase, IAuditable, IAggregateRoot
+  public abstract class BaseDeleteAndRecoveryController<TSoftDelete, THardDelete, TRecovery> : ControllerBase
+    where TSoftDelete : GenericSoftDeleteCommand
+    where THardDelete : GenericHardDeleteCommand
+    where TRecovery : GenericRecoveryCommand
   {
       private readonly ISender _mediator;
       private readonly ICurrentUser _currentUser;
 
-      protected abstract string SoftDeletePermission { get; }
-
+      protected abstract Func<List<int>, int, TSoftDelete> CreateSoftDeleteCommand { get; }
+      protected abstract Func<List<int>, int, THardDelete> CreateHardDeleteCommand { get; }
+      protected abstract Func<int, int, TRecovery> CreateRecoveryCommand { get; }
       protected BaseDeleteAndRecoveryController(ISender mediator, ICurrentUser currentUser)
       {
           _mediator = mediator;
@@ -34,7 +36,7 @@ namespace API.Controllers.BaseApi
             //       return Unauthorized("Không xác định được người dùng.");
 
             int userId = 1;
-            var command = new SoftDeleteCommand<TEntity>(ids, userId);
+            var command = CreateSoftDeleteCommand(ids, userId);
             var result = await _mediator.Send(command);
             return Ok(result);
       }
@@ -45,7 +47,7 @@ namespace API.Controllers.BaseApi
         //   if (_currentUser.UserId is not int userId)
         //       return Unauthorized("Không xác định được người dùng.");
             int userId = 1;
-          var command = new HardDeleteCommand<TEntity>(ids, userId);
+          var command = CreateHardDeleteCommand(ids, userId);
           var result = await _mediator.Send(command);
           return Ok(result);
       }
@@ -56,7 +58,7 @@ namespace API.Controllers.BaseApi
         //   if (_currentUser.UserId is not int userId)
         //       return Unauthorized("Không xác định được người dùng.");
             int userId = 1;
-          var command = new RecoveryCommand<TEntity>(id, userId);
+          var command = CreateRecoveryCommand(id, userId);
           var result = await _mediator.Send(command);
           return Ok(result);
       }

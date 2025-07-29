@@ -1,4 +1,4 @@
-using Domain.Entities.Products.ProductAggregate;
+using Domain.Entities.ProductModule.ProductAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,25 +20,12 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.CostPrice).HasColumnType("decimal(18,2)");
 
-        builder.OwnsOne(x => x.PriceTier1, priceTier =>
+        builder.OwnsMany(p => p.PriceTiers, pb =>
         {
-            priceTier.Property(p => p.Quantity).HasColumnType("int").HasColumnName("Quantity1").HasColumnOrder(5);
-            priceTier.Property(p => p.Price).HasColumnType("decimal(18,2)").HasColumnName("SellingPrice1").HasColumnOrder(6);
-        });
-        builder.OwnsOne(x => x.PriceTier2, priceTier =>
-        {
-            priceTier.Property(p => p.Quantity).HasColumnType("int").HasColumnName("Quantity2").HasColumnOrder(7);
-            priceTier.Property(p => p.Price).HasColumnType("decimal(18,2)").HasColumnName("SellingPrice2").HasColumnOrder(8);
-        });
-        builder.OwnsOne(x => x.PriceTier3, priceTier =>
-        {
-            priceTier.Property(p => p.Quantity).HasColumnType("int").HasColumnName("Quantity3").HasColumnOrder(9);
-            priceTier.Property(p => p.Price).HasColumnType("decimal(18,2)").HasColumnName("SellingPrice3").HasColumnOrder(10);
-        });
-        builder.OwnsOne(x => x.PriceTier4, priceTier =>
-        {
-            priceTier.Property(p => p.Quantity).HasColumnType("int").HasColumnName("Quantity4").HasColumnOrder(11);
-            priceTier.Property(p => p.Price).HasColumnType("decimal(18,2)").HasColumnName("SellingPrice4").HasColumnOrder(12);
+            pb.ToTable("ProductPriceTiers");
+            pb.WithOwner().HasForeignKey("ProductId");
+            pb.Property(p => p.Price);
+            pb.Property(p => p.Quantity);
         });
         builder.OwnsOne(x => x.PreOrderInfo, preOrder =>
         {

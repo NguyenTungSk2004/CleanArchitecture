@@ -15,7 +15,6 @@ builder.Services.AddHttpContextAccessor();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddInfrastructure(connectionString!);
-builder.Services.AddAllGenericHandlers();
 builder.Services.AddServices();
 
 // Swagger (tùy chọn)

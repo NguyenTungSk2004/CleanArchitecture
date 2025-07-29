@@ -1,25 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Domain.Entities.Products.ProductAggregate;
 using API.Controllers.BaseApi;
 using SharedKernel.Interfaces;
-using API.Requests;
+using Application.UseCases.Products.BaseCommands;
+using Application.UseCases.Products.Commands.CreateProduct;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController : BaseDeleteAndRecoveryController<Product>
+public class ProductsController : BaseDeleteAndRecoveryController<
+        ProductSoftDeleteCommand,
+        ProductHardDeleteCommand,
+        ProductRecoveryCommand>
 {
-    protected override string SoftDeletePermission => "";
     private readonly ISender _mediator;
-
     public ProductsController(ISender mediator, ICurrentUser currentUser)
         : base(mediator, currentUser)
     {
         _mediator = mediator;
     }
 
+    protected override Func<List<int>, int, ProductSoftDeleteCommand> CreateSoftDeleteCommand => (ids, userId) => new ProductSoftDeleteCommand(ids, userId);
+
+    protected override Func<List<int>, int, ProductHardDeleteCommand> CreateHardDeleteCommand => (ids, userId) => new ProductHardDeleteCommand(ids, userId);
+
+    protected override Func<int, int, ProductRecoveryCommand> CreateRecoveryCommand => CreateRecovery;
+
+    private ProductRecoveryCommand CreateRecovery(int id, int userId)
+    {
+        return new ProductRecoveryCommand(id, userId);
+    }
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductRequest request)
     {
