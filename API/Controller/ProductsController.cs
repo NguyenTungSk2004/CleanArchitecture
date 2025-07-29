@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Application.Services.Products.Commands.CreateProduct;
 using MediatR;
 using Domain.Entities.Products.ProductAggregate;
 using API.Controllers.BaseApi;

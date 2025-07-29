@@ -1,14 +1,18 @@
-# Tạo lại file solution (.sln) cho dự án .NET
+﻿# Tạo lại file solution (.sln) cho dự án .NET
 # Sử dụng PowerShell
 # Yêu cầu: dotnet CLI đã cài đặt
 
 # Đặt tên solution
-$solutionName = "SkTeam"
+$solutionName = "CleanArchitecture"
 $solutionFile = "$solutionName.sln"
 
+$solution = Get-ChildItem -Path . -Recurse -Filter *.sln
+    
 # Xóa file .sln cũ nếu tồn tại
-if (Test-Path $solutionFile) {
-    Remove-Item $solutionFile -Force
+foreach ($file in $solution) {
+    if (Test-Path $file.FullName) {
+        Remove-Item $file.FullName -Force
+    }
 }
 
 # Tạo file .sln mới
