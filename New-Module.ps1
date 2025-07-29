@@ -1,6 +1,6 @@
 param (
-    [string]$moduleName = "Auth",
-    [string]$solutionName = "SkTeam"
+    [string]$moduleName = "Product",
+    [string]$solutionName = "CleanArchitecture"
 )
 
 $modulePath = "Modules/$moduleName"
@@ -33,7 +33,7 @@ dotnet add "$modulePath/$moduleName.Infrastructure/$moduleName.Infrastructure.cs
            "$modulePath/$moduleName.Domain/$moduleName.Domain.csproj"
 
 # Optional: Link to SharedKernel if exists
-$sharedKernelPath = "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
+$sharedKernelPath = "SharedKernel/SharedKernel.csproj"
 if (Test-Path $sharedKernelPath) {
     dotnet add "$modulePath/$moduleName.Domain/$moduleName.Domain.csproj" reference "$sharedKernelPath"
     dotnet add "$modulePath/$moduleName.Infrastructure/$moduleName.Infrastructure.csproj" reference "$sharedKernelPath"
