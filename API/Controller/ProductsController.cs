@@ -21,13 +21,13 @@ public class ProductsController : BaseDeleteAndRecoveryController<
         _mediator = mediator;
     }
 
-    protected override Func<List<int>, int, ProductSoftDeleteCommand> CreateSoftDeleteCommand => (ids, userId) => new ProductSoftDeleteCommand(ids, userId);
+    protected override Func<List<long>, long, ProductSoftDeleteCommand> CreateSoftDeleteCommand => (ids, userId) => new ProductSoftDeleteCommand(ids, userId);
 
-    protected override Func<List<int>, int, ProductHardDeleteCommand> CreateHardDeleteCommand => (ids, userId) => new ProductHardDeleteCommand(ids, userId);
+    protected override Func<List<long>, long, ProductHardDeleteCommand> CreateHardDeleteCommand => (ids, userId) => new ProductHardDeleteCommand(ids, userId);
 
-    protected override Func<int, int, ProductRecoveryCommand> CreateRecoveryCommand => CreateRecovery;
+    protected override Func<long, long, ProductRecoveryCommand> CreateRecoveryCommand => CreateRecovery;
 
-    private ProductRecoveryCommand CreateRecovery(int id, int userId)
+    private ProductRecoveryCommand CreateRecovery(long id, long userId)
     {
         return new ProductRecoveryCommand(id, userId);
     }

@@ -29,7 +29,7 @@ SkTeam/
 │   ├── DTOs/
 │   ├── QueryServices/
 │   ├── Services/
-│   │   ├── BaseServices/
+│   │   ├── Base/
 │   │   │   ├── HardDelete/
 │   │   │   ├── Recovery/
 │   │   │   └── SoftDelete/

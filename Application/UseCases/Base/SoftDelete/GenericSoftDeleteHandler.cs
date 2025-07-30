@@ -1,12 +1,12 @@
-using SharedKernel.Base;
 using SharedKernel.Interfaces;
 using SharedKernel.Specifications;
 using MediatR;
+using SharedKernel.Base;
 
-namespace Application.UseCases.BaseServices.SoftDelete
+namespace Application.UseCases.Base.SoftDelete
 {
    public abstract class GenericSoftDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
-        where TEntity : EntityBase, IAuditable, IAggregateRoot
+        where TEntity : Entity, ISoftDeletable, IAggregateRoot
         where TCommand : GenericSoftDeleteCommand
     {
         private readonly IRepository<TEntity> _repository;
@@ -23,7 +23,7 @@ namespace Application.UseCases.BaseServices.SoftDelete
 
             foreach (var entity in entities)
             {
-                entity.SoftDelete(request.UserId);
+                entity.MarkDeleted(request.UserId);
             }
 
             await _repository.UpdateRangeAsync(entities, cancellationToken);

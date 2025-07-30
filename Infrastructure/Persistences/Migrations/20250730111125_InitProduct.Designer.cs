@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistences.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250729172402_InitProduct")]
+    [Migration("20250730111125_InitProduct")]
     partial class InitProduct
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrastructure.Persistences.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.ProductModule.ProductAggregate.Product", b =>
+            modelBuilder.Entity("Domain.ProductModule.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,9 +71,6 @@ namespace Infrastructure.Persistences.Migrations
                     b.Property<int?>("OriginId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("RecoveryDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("TaxRate")
                         .HasColumnType("nvarchar(max)");
 
@@ -98,9 +95,9 @@ namespace Infrastructure.Persistences.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductModule.ProductAggregate.Product", b =>
+            modelBuilder.Entity("Domain.ProductModule.Entities.Product", b =>
                 {
-                    b.OwnsOne("Domain.Entities.ProductModule.ValueObjects.PreOrderInfo", "PreOrderInfo", b1 =>
+                    b.OwnsOne("Domain.ProductModule.ValueObjects.PreOrderInfo", "PreOrderInfo", b1 =>
                         {
                             b1.Property<int>("ProductId")
                                 .HasColumnType("int");
@@ -121,7 +118,7 @@ namespace Infrastructure.Persistences.Migrations
                                 .HasForeignKey("ProductId");
                         });
 
-                    b.OwnsMany("Domain.Entities.ProductModule.ValueObjects.PriceTier", "PriceTiers", b1 =>
+                    b.OwnsMany("Domain.ProductModule.ValueObjects.PriceTier", "PriceTiers", b1 =>
                         {
                             b1.Property<int>("ProductId")
                                 .HasColumnType("int");

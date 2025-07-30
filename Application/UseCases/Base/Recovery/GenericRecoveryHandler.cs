@@ -3,10 +3,10 @@ using SharedKernel.Exceptions;
 using SharedKernel.Interfaces;
 using MediatR;
 
-namespace Application.UseCases.BaseServices.Recovery
+namespace Application.UseCases.Base.Recovery
 {
     public abstract class GenericRecoveryHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
-        where TEntity : EntityBase, IAuditable, IAggregateRoot
+        where TEntity : Entity, ISoftDeletable, IAggregateRoot
         where TCommand : GenericRecoveryCommand
     {
         private readonly IRepository<TEntity> _repository;
@@ -30,9 +30,7 @@ namespace Application.UseCases.BaseServices.Recovery
                 if (!record.IsDeleted)
                     throw new ExceptionHelper("Không thể khôi phục bản ghi chưa bị xóa");
 
-                if (record is EntityBase entity) entity.Recover();
-                else return false;
-
+                record.Recover();
                 await _repository.UpdateAsync(record, cancellationToken);
                 return true;
             }

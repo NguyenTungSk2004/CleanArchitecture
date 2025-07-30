@@ -1,3 +1,5 @@
 namespace SharedKernel.Interfaces;
 
-public interface IAggregateRoot { }
+public interface IAggregateRoot
+{ 
+}

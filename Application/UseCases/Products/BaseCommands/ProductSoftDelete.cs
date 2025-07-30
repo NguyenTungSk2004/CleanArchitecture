@@ -1,10 +1,10 @@
-using Application.UseCases.BaseServices.SoftDelete;
-using Domain.Entities.ProductModule.ProductAggregate;
+using Application.UseCases.Base.SoftDelete;
+using Domain.ProductModule.Entities;
 using SharedKernel.Interfaces;
 
 namespace Application.UseCases.Products.BaseCommands
 {
-    public record ProductSoftDeleteCommand(List<int> Ids, int UserId) : GenericSoftDeleteCommand(Ids, UserId);
+    public record ProductSoftDeleteCommand(List<long> Ids, long UserId) : GenericSoftDeleteCommand(Ids, UserId);
     public class ProductSoftDeleteHandler : GenericSoftDeleteHandler<Product, ProductSoftDeleteCommand>
     {
         public ProductSoftDeleteHandler(IRepository<Product> repository) : base(repository) { }

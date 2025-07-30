@@ -1,7 +1,7 @@
-using Domain.Entities.ProductModule.ValueObjects;
-using Domain.Exceptions;
+using Domain.Commons.Exceptions;
+using Domain.ProductModule.ValueObjects;
 
-namespace Domain.Entities.ProductModule.Rules
+namespace Domain.ProductModule.Rules
 {
     public static class ProductRules
     {

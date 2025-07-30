@@ -1,4 +1,4 @@
-using Domain.Entities.ProductModule.ProductAggregate;
+using Domain.ProductModule.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

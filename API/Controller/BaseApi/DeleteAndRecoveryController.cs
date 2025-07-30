@@ -1,9 +1,9 @@
 using SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.UseCases.BaseServices.SoftDelete;
-using Application.UseCases.BaseServices.HardDelete;
-using Application.UseCases.BaseServices.Recovery;
+using Application.UseCases.Base.SoftDelete;
+using Application.UseCases.Base.HardDelete;
+using Application.UseCases.Base.Recovery;
 
 namespace API.Controllers.BaseApi
 {
@@ -20,9 +20,9 @@ namespace API.Controllers.BaseApi
       private readonly ISender _mediator;
       private readonly ICurrentUser _currentUser;
 
-      protected abstract Func<List<int>, int, TSoftDelete> CreateSoftDeleteCommand { get; }
-      protected abstract Func<List<int>, int, THardDelete> CreateHardDeleteCommand { get; }
-      protected abstract Func<int, int, TRecovery> CreateRecoveryCommand { get; }
+      protected abstract Func<List<long>, long, TSoftDelete> CreateSoftDeleteCommand { get; }
+      protected abstract Func<List<long>, long, THardDelete> CreateHardDeleteCommand { get; }
+      protected abstract Func<long, long, TRecovery> CreateRecoveryCommand { get; }
       protected BaseDeleteAndRecoveryController(ISender mediator, ICurrentUser currentUser)
       {
           _mediator = mediator;
@@ -30,7 +30,7 @@ namespace API.Controllers.BaseApi
       }
 
       [HttpDelete("soft-delete")]
-      public async Task<IActionResult> SoftDeleteAsync([FromBody] List<int> ids)
+      public async Task<IActionResult> SoftDeleteAsync([FromBody] List<long> ids)
       {
             //   if (_currentUser.UserId is not int userId)
             //       return Unauthorized("Không xác định được người dùng.");
@@ -42,7 +42,7 @@ namespace API.Controllers.BaseApi
       }
 
       [HttpDelete("hard-delete")]
-      public async Task<IActionResult> HardDeleteAsync([FromBody] List<int> ids)
+      public async Task<IActionResult> HardDeleteAsync([FromBody] List<long> ids)
       {
         //   if (_currentUser.UserId is not int userId)
         //       return Unauthorized("Không xác định được người dùng.");

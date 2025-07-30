@@ -1,4 +1,4 @@
-using Domain.Entities.ProductModule.ValueObjects;
+using Domain.ProductModule.ValueObjects;
 
 namespace Application.UseCases.Products.Commands.CreateProduct
 {

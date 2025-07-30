@@ -1,4 +1,4 @@
-namespace Domain.Exceptions;
+namespace Domain.Commons.Exceptions;
 
 public class BusinessRuleViolationException : Exception
 {
