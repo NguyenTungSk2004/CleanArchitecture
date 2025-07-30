@@ -1,4 +1,4 @@
-namespace Domain.Entities.ProductModule.ValueObjects
+namespace Domain.ProductModule.ValueObjects
 {
     public record PreOrderInfo(string? WaitingTimeUntilAvailable, int Quantity);
 }

@@ -1,12 +1,13 @@
 using Ardalis.Specification;
+using SharedKernel.Base;
 using SharedKernel.Interfaces;
 
 namespace SharedKernel.Specifications
 {
     public class EntitiesByIdsSpecification<TEntity> : Specification<TEntity>
-        where TEntity : class, IAuditable, IAggregateRoot
+        where TEntity : Entity, IAggregateRoot, ISoftDeletable
     {
-        public EntitiesByIdsSpecification(IEnumerable<int> ids, bool? isDeleted = null)
+        public EntitiesByIdsSpecification(IEnumerable<long> ids, bool? isDeleted = null)
         {
             if (isDeleted.HasValue)
             {

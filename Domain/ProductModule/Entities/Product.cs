@@ -1,15 +1,23 @@
-using Domain.Entities.ProductModule.Rules;
-using Domain.Entities.ProductModule.ValueObjects;
+using Domain.ProductModule.Rules;
+using Domain.ProductModule.ValueObjects;
 using SharedKernel.Base;
 using SharedKernel.Interfaces;
 
-namespace Domain.Entities.ProductModule.ProductAggregate;
+namespace Domain.ProductModule.Entities;
 
 /// <summary>
 /// Hàng hóa
 /// </summary>
-public class Product : EntityBase, IAggregateRoot
+public class Product : Entity, ISoftDeletable, ICreationTrackable, IUpdateTrackable, IAggregateRoot
 {
+    public long? CreatedBy { get; set; }
+    public DateTime? CreatedDate { get; set; }
+    public long? UpdatedBy { get; set; }
+    public DateTime? UpdatedDate { get; set; }
+    public bool IsDeleted { get; set; }
+    public long? DeletedBy { get; set; }
+    public DateTime? DeletedDate { get; set; }
+
     public string Code { get; private set; } = string.Empty;
     public string Name { get; private set; } = string.Empty;
     public string? BarCode { get; private set; }
@@ -59,7 +67,7 @@ public class Product : EntityBase, IAggregateRoot
             BarCode = barCode;
             TaxRate = taxRate;
             CostPrice = costPrice;
-            SetUpdated(updateBy);
+            this.MarkUpdated(updateBy);
         }
         catch (Exception ex)
         {
@@ -73,7 +81,7 @@ public class Product : EntityBase, IAggregateRoot
         {
             ProductRules.EnsureValidPriceTiers(values);
             PriceTiers = values;
-            SetUpdated(updateBy);
+            this.MarkUpdated(updateBy);
         }
         catch (Exception ex)
         {
@@ -86,7 +94,7 @@ public class Product : EntityBase, IAggregateRoot
         try
         {
             PreOrderInfo = preOrderInfo;
-            SetUpdated(updateBy);
+            this.MarkUpdated(updateBy);
         }
         catch (Exception ex)
         {
@@ -99,7 +107,7 @@ public class Product : EntityBase, IAggregateRoot
         try
         {
             PreOrderInfo = new PreOrderInfo("Từ 7 đến 10 ngày", 0);
-            SetUpdated(updateBy);
+            this.MarkUpdated(updateBy);
         }
         catch (Exception ex)
         {

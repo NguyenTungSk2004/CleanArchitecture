@@ -1,4 +1,4 @@
-using Domain.Entities.ProductModule.ValueObjects;
+using Domain.ProductModule.ValueObjects;
 using MediatR;
 
 namespace Application.UseCases.Products.Commands.CreateProduct
@@ -15,5 +15,5 @@ namespace Application.UseCases.Products.Commands.CreateProduct
         int? CategoryId,
         int? OriginId,
         int? ManufacturerId
-    ) : IRequest<int>;
+    ) : IRequest<long>;
 }

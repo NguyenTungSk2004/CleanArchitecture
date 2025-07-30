@@ -17,6 +17,13 @@ namespace Infrastructure.Persistences.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedBy = table.Column<int>(type: "int", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Code = table.Column<string>(type: "varchar(200)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(300)", nullable: false),
                     BarCode = table.Column<string>(type: "varchar(200)", nullable: true),
@@ -27,15 +34,7 @@ namespace Infrastructure.Persistences.Migrations
                     UnitOfQuantityId = table.Column<int>(type: "int", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
                     OriginId = table.Column<int>(type: "int", nullable: true),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RecoveryDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ManufacturerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

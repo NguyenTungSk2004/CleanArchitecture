@@ -1,16 +1,20 @@
 namespace SharedKernel.Interfaces;
 
-public interface IAuditable
+public interface ICreationTrackable
 {
-    int? CreatedBy { get; }
-    int? UpdatedBy { get; }
-    int? DeletedBy { get; }
+    long? CreatedBy { get; set; }
+    DateTime? CreatedDate { get; set; }
+}
 
-    DateTime? CreatedDate { get; }
-    DateTime? UpdatedDate { get; }
-    DateTime? DeletedDate { get; }
-    DateTime? RecoveryDate { get; }
+public interface IUpdateTrackable
+{
+    long? UpdatedBy { get; set; }
+    DateTime? UpdatedDate { get; set; }
+}
 
-    bool IsDeleted { get; }
-    int Id { get; }
+public interface ISoftDeletable
+{
+    bool IsDeleted { get; set; }
+    long? DeletedBy { get; set; }
+    DateTime? DeletedDate { get; set; }
 }

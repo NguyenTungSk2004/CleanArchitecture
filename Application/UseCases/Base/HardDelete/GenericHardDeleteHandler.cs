@@ -1,14 +1,14 @@
-using SharedKernel.Base;
 using SharedKernel.Exceptions;
 using SharedKernel.Interfaces;
 using SharedKernel.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Base;
 
-namespace Application.UseCases.BaseServices.HardDelete
+namespace Application.UseCases.Base.HardDelete
 {
     public abstract class GenericHardDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
-        where TEntity : EntityBase, IAuditable, IAggregateRoot
+        where TEntity : Entity, ISoftDeletable, IAggregateRoot
         where TCommand : GenericHardDeleteCommand
     {
         private readonly IRepository<TEntity> _repository;

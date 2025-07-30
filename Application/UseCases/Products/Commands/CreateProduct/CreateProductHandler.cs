@@ -1,10 +1,10 @@
-using Domain.Entities.ProductModule.ProductAggregate;
+using Domain.ProductModule.Entities;
 using MediatR;
 using SharedKernel.Interfaces;
 
 namespace Application.UseCases.Products.Commands.CreateProduct
 {
-    public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
+    public class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
     {
         private readonly IRepository<Product> _productRepository;
         private readonly ICurrentUser _currentUser;
@@ -18,7 +18,7 @@ namespace Application.UseCases.Products.Commands.CreateProduct
             _productRepository = productRepository;
         }
 
-        public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             if (_currentUser.UserId == null)
             {
