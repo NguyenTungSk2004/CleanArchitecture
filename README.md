@@ -6,7 +6,7 @@ Dự án này áp dụng Clean Architecture, Domain-Driven Design (DDD), CQRS v�
 
 ---
 
-## 2. Cấu trúc thư mục thực tế (chỉ liệt kê thư mục, có chú thích)
+## 2. Cấu trúc thư mục thực tế
 
 ```
 API/                  # Tầng trình bày, nhận request, trả response
