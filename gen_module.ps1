@@ -1,3 +1,0 @@
-Param(
-    [string]$Module = "Example",
-)

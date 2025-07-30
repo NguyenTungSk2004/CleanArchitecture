@@ -42,30 +42,3 @@ dotnet add "$solutionName.Domain/$solutionName.Domain.csproj" reference "$soluti
 dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.Application/$solutionName.Application.csproj"
 dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.Domain/$solutionName.Domain.csproj"
 dotnet add "$solutionName.Infrastructure/$solutionName.Infrastructure.csproj" reference "$solutionName.SharedKernel/$solutionName.SharedKernel.csproj"
-
-# 5. Create common folder structure for each project
-mkdir $solutionName.Domain/Entities
-mkdir $solutionName.Domain/ValueObjects
-mkdir $solutionName.Domain/Events
-mkdir $solutionName.Domain/Repositories
-mkdir $solutionName.Domain/Services
-
-mkdir $solutionName.Application/Features
-mkdir $solutionName.Application/Common
-mkdir $solutionName.Application/Interfaces
-mkdir $solutionName.Application/Behaviors
-mkdir $solutionName.Application/DTOs
-
-mkdir $solutionName.Infrastructure/Persistence
-mkdir $solutionName.Infrastructure/Repositories
-mkdir $solutionName.Infrastructure/Services
-mkdir $solutionName.Infrastructure/DependencyInjection
-
-mkdir $solutionName.API/Controllers
-mkdir $solutionName.API/DependencyInjection
-mkdir $solutionName.API/Filters
-
-mkdir $solutionName.SharedKernel/Base
-mkdir $solutionName.SharedKernel/Events
-mkdir $solutionName.SharedKernel/Interfaces
-mkdir $solutionName.SharedKernel/Specifications
