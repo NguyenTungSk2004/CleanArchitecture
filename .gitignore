@@ -8,6 +8,7 @@
 **/*.app
 **/*.so
 **/*.dylib
+appsettings.json
 # MSBuild cache
 *.assets.cache
 
@@ -51,13 +52,6 @@ TestResults/
 packages/
 project.lock.json
 project.fragment.lock.json
-
-## Entity Framework
-Migrations/
-*.dbmdl
-*.bak
-*.mdf
-*.ldf
 
 ## Secrets
 secrets.json

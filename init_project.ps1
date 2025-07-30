@@ -1,4 +1,4 @@
-# Clean Architecture Project Generator
+﻿# Clean Architecture Project Generator
 
 $solutionName = "SkTeam"
 $root = "$PWD/$solutionName"
