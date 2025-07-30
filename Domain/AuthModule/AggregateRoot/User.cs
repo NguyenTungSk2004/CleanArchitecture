@@ -1,14 +1,12 @@
 using Domain.AuthModule.Entities;
 using Domain.AuthModule.Enum;
-using Domain.AuthModule.Interface;
 using SharedKernel.Base;
 using SharedKernel.Interfaces;
 
 namespace Domain.AuthModule.AggregateRoot
 {
-    public class User : ICreationTrackable, IAggregateRoot
+    public class User : Entity, ICreationTrackable, IAggregateRoot
     {
-        public long Id { get; set; }
         public long? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
 

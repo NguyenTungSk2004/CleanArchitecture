@@ -1,6 +1,8 @@
+using SharedKernel.Base;
+
 namespace Domain.AuthModule.Entities
 {
-    public class UserProviders
+    public class UserProviders: Entity
     {
         
     }
