@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using API.Controllers.BaseApi;
 using SharedKernel.Interfaces;
-using Application.UseCases.Products.BaseCommands;
-using Application.UseCases.Products.Commands.CreateProduct;
+using Application.UseCases.ProductModule.BaseCommands;
+using Application.UseCases.ProductModule.Commands.CreateProduct;
 
 namespace WebAPI.Controllers;
 

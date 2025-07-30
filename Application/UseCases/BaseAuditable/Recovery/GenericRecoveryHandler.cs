@@ -3,7 +3,7 @@ using SharedKernel.Exceptions;
 using SharedKernel.Interfaces;
 using MediatR;
 
-namespace Application.UseCases.Base.Recovery
+namespace Application.UseCases.BaseAuditable.Recovery
 {
     public abstract class GenericRecoveryHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
         where TEntity : Entity, ISoftDeletable, IAggregateRoot

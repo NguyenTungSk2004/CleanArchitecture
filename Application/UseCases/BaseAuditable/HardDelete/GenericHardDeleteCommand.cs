@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.UseCases.Base.HardDelete
+namespace Application.UseCases.BaseAuditable.HardDelete
 {
     public abstract record GenericHardDeleteCommand(List<long> Ids, long UserId) : IRequest<bool>;
 }

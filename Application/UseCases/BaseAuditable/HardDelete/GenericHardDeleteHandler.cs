@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Base;
 
-namespace Application.UseCases.Base.HardDelete
+namespace Application.UseCases.BaseAuditable.HardDelete
 {
     public abstract class GenericHardDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
         where TEntity : Entity, ISoftDeletable, IAggregateRoot

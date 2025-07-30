@@ -1,7 +1,7 @@
 using Domain.ProductModule.ValueObjects;
 using MediatR;
 
-namespace Application.UseCases.Products.Commands.CreateProduct
+namespace Application.UseCases.ProductModule.Commands.CreateProduct
 {
     public record CreateProductCommand(
         string Code,

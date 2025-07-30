@@ -1,6 +1,6 @@
 using Domain.ProductModule.ValueObjects;
 
-namespace Application.UseCases.Products.Commands.CreateProduct
+namespace Application.UseCases.ProductModule.Commands.CreateProduct
 {
     public class CreateProductRequest
     {

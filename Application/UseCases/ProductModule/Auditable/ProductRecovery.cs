@@ -1,8 +1,8 @@
-using Application.UseCases.Base.Recovery;
+using Application.UseCases.BaseAuditable.Recovery;
 using Domain.ProductModule.Entities;
 using SharedKernel.Interfaces;
 
-namespace Application.UseCases.Products.BaseCommands
+namespace Application.UseCases.ProductModule.Auditable
 {
     public record ProductRecoveryCommand(long Id, long UserId) : GenericRecoveryCommand(Id, UserId);
 

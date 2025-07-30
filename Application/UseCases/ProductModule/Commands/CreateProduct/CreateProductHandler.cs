@@ -2,7 +2,7 @@ using Domain.ProductModule.Entities;
 using MediatR;
 using SharedKernel.Interfaces;
 
-namespace Application.UseCases.Products.Commands.CreateProduct
+namespace Application.UseCases.ProductModule.Commands.CreateProduct
 {
     public class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
     {

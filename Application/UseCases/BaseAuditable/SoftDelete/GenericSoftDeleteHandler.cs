@@ -3,7 +3,7 @@ using SharedKernel.Specifications;
 using MediatR;
 using SharedKernel.Base;
 
-namespace Application.UseCases.Base.SoftDelete
+namespace Application.UseCases.BaseAuditable.SoftDelete
 {
    public abstract class GenericSoftDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
         where TEntity : Entity, ISoftDeletable, IAggregateRoot
