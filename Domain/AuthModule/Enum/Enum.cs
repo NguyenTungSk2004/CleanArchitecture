@@ -13,7 +13,17 @@ namespace Domain.AuthModule.Enum
         [Description("Tài khoản Apple")]
         Apple = 3
     }
-
+    public enum OtpStatus
+    {
+        [Description("Chưa xác minh")]
+        Pending = 0,
+        [Description("Đã xác minh")]
+        Verified = 1,
+        [Description("Hết hạn")]
+        Expired = 2,
+        [Description("Thất bại")]
+        Failed = 3
+    }
     public enum OtpType
     {
         [Description("Xác thực đăng nhập")]

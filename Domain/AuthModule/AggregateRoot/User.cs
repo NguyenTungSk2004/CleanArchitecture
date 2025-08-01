@@ -21,7 +21,6 @@ namespace Domain.AuthModule.AggregateRoot
         public UserStatus Status { get; private set; }
 
         public Account? Account { get; set; }
-
         public User(
             string? email,
             string? phoneNumber,

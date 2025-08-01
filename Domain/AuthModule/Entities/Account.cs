@@ -8,7 +8,6 @@ namespace Domain.AuthModule.Entities
         public string UserName { get; private set; } = string.Empty;
         public string Password { get; private set; } = string.Empty;
         public string? Salt { get; private set; }
-
         public Account(long userId, string userName, string password, string? salt = null)
         {
             UserId = userId;
