@@ -1,10 +1,10 @@
 # Chapter 6: MediatR (CQRS Commands & Handlers)
 
 Welcome back! In our previous chapters, we built a strong foundation for our application:
-*   [Chapter 1: Domain Entities & Aggregate Roots](01_domain_entities___aggregate_roots_.md) defined our core business "things."
-*   [Chapter 2: Auditing & Soft Deletion](02_auditing___soft_deletion_.md) added tracking and safe deletion.
-*   [Chapter 3: Clean Architecture Layers](03_clean_architecture_layers_.md) taught us how to organize our code into distinct layers.
-*   [Chapter 4: Repository Pattern (IRepository<T>)](04_repository_pattern__irepository_t___.md) showed us how to save and load our "things" from the database.
+*   [Chapter 1: Domain Entities & Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md) defined our core business "things."
+*   [Chapter 2: Auditing & Soft Deletion](Z-Tutorials/02_auditing___soft_deletion_.md) added tracking and safe deletion.
+*   [Chapter 3: Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md) taught us how to organize our code into distinct layers.
+*   [Chapter 4: Repository Pattern (IRepository<T>)](Z-Tutorials/04_repository_pattern__irepository_t___.md) showed us how to save and load our "things" from the database.
 *   [Chapter 5: Current User Context (ICurrentUser)](05_current_user_context__icurrentuser_.md) allowed us to know *who* is performing actions.
 
 Now, let's bring it all together and understand how the different parts of our application communicate with each other in a clean, organized way. How does a web request (from the `API` layer) trigger a business operation (in the `Application` layer) that then interacts with our `Domain` entities and `Repositories`? This is where **MediatR** comes in, often combined with the **Command Query Responsibility Segregation (CQRS)** pattern.
@@ -145,7 +145,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, long> 
 *   `CreateProductHandler` implements `IRequestHandler<CreateProductCommand, long>`, meaning it's the specific expert for `CreateProductCommand` and will return a `long`.
 *   Its `Handle` method receives the `CreateProductCommand` (named `request`).
 *   Inside `Handle`, it uses our `ICurrentUser` to get the `userId` and `IRepository<Product>` to save the `Product`. It also calls methods directly on the `Product` entity (from the `Domain` layer) to enforce business rules.
-*   Notice how this handler coordinates between different parts of our Clean Architecture. It uses `ICurrentUser` from `SharedKernel`, `Product` from `Domain`, and `IRepository` which is implemented in `Infrastructure`. This is the `Application` layer's job (as discussed in [Chapter 3: Clean Architecture Layers](03_clean_architecture_layers_.md)).
+*   Notice how this handler coordinates between different parts of our Clean Architecture. It uses `ICurrentUser` from `SharedKernel`, `Product` from `Domain`, and `IRepository` which is implemented in `Infrastructure`. This is the `Application` layer's job (as discussed in [Chapter 3: Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md)).
 
 ## Using MediatR: Creating a Product
 
@@ -233,10 +233,10 @@ sequenceDiagram
 3.  **MediatR (The Hub):** MediatR receives the `CreateProductCommand`. Based on its internal setup, it knows that `CreateProductHandler` is the "expert" for this type of command.
 4.  **Application Layer (Handler):** MediatR invokes the `Handle` method of the `CreateProductHandler`. This handler now takes control of the business workflow:
     *   It uses the `ICurrentUser` (from [Chapter 5](05_current_user_context__icurrentuser_.md)) to get the `userId`.
-    *   It creates a new `Product` instance (our [Aggregate Root](01_domain_entities___aggregate_roots_.md) from the `Domain` layer, [Chapter 1](01_domain_entities___aggregate_roots_.md)).
+    *   It creates a new `Product` instance (our [Aggregate Root](Z-Tutorials/01_domain_entities___aggregate_roots_.md) from the `Domain` layer, [Chapter 1](Z-Tutorials/01_domain_entities___aggregate_roots_.md)).
     *   It calls methods on the `Product` (like `UpdatePriceTiers`) to set its properties and enforce its internal business rules.
-    *   It then tells the `IRepository<Product>` (from [Chapter 4](04_repository_pattern__irepository_t___.md)) to `AddAsync` the new `Product`.
-5.  **Infrastructure Layer (Repository):** The `EfRepository<Product>` (the actual implementation in the `Infrastructure` layer, [Chapter 4](04_repository_pattern__irepository_t___.md)) receives the `AddAsync` call. It uses Entity Framework Core to save the `Product` data to the SQL Server database.
+    *   It then tells the `IRepository<Product>` (from [Chapter 4](Z-Tutorials/04_repository_pattern__irepository_t___.md)) to `AddAsync` the new `Product`.
+5.  **Infrastructure Layer (Repository):** The `EfRepository<Product>` (the actual implementation in the `Infrastructure` layer, [Chapter 4](Z-Tutorials/04_repository_pattern__irepository_t___.md)) receives the `AddAsync` call. It uses Entity Framework Core to save the `Product` data to the SQL Server database.
 6.  **Database:** The database stores the new product record and returns a success confirmation (including the new product's unique ID).
 7.  **Return Flow:** The success confirmation and the new product ID flow back through the `EfRepository`, then back to the `CreateProductHandler`. The `CreateProductHandler` returns this `productId` to MediatR.
 8.  **MediatR to API:** MediatR receives the `productId` from the handler and returns it to the `ProductsController`.

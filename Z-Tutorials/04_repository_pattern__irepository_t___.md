@@ -1,6 +1,6 @@
 # Chapter 4: Repository Pattern (IRepository<T>)
 
-Welcome back! In [Chapter 3: Clean Architecture Layers](03_clean_architecture_layers_.md), we learned how to organize our application into distinct layers – `Domain`, `Application`, `Infrastructure`, `API`, and `SharedKernel` – to keep our code clean and maintainable. We saw how the `Application` layer orchestrates business tasks, using our core `Domain` entities, but it needs a way to store and retrieve these entities.
+Welcome back! In [Chapter 3: Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md), we learned how to organize our application into distinct layers – `Domain`, `Application`, `Infrastructure`, `API`, and `SharedKernel` – to keep our code clean and maintainable. We saw how the `Application` layer orchestrates business tasks, using our core `Domain` entities, but it needs a way to store and retrieve these entities.
 
 Now, let's tackle a crucial piece of this puzzle: How does our `Application` layer get data (like a `Product`) from the database, and how does it save changes back, without ever knowing the messy details of databases like SQL Server? This is where the **Repository Pattern** comes in!
 
@@ -19,7 +19,7 @@ We need a middle-person, someone who knows how to talk to the database farm, fet
 
 The **Repository Pattern** provides this middle-person. It's like having a **librarian** for your data. When you (your `Application` layer) need a specific book (a `Product` entity), you don't go rummaging through the shelves yourself. You simply ask the librarian. The librarian knows exactly where the book is, how it's organized, and how to retrieve it. You don't need to know the shelf number or the library's internal system.
 
-Similarly, a "Repository" provides an abstract (simplified) way to work with your [Aggregate Roots](01_domain_entities___aggregate_roots_.md) (like `Product`). It hides all the complex database operations from your business logic.
+Similarly, a "Repository" provides an abstract (simplified) way to work with your [Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md) (like `Product`). It hides all the complex database operations from your business logic.
 
 ### 1. The `IRepository<T>` Interface (The Contract)
 
@@ -45,7 +45,7 @@ public interface IRepository<T> : IRepositoryBase<T> // This is our contract!
 
 **Explanation:**
 *   `IRepository<T>` is a "generic" interface. The `<T>` means it can work with *any* type of `AggregateRoot` (like `Product`, `Order`, `User`, etc.). So, you can have `IRepository<Product>` for products, `IRepository<Order>` for orders, and so on.
-*   `where T : class, IAggregateRoot` ensures that `T` can only be a class that also implements `IAggregateRoot`. This is a core rule: repositories only deal with [Aggregate Roots](01_domain_entities___aggregate_roots_.md)!
+*   `where T : class, IAggregateRoot` ensures that `T` can only be a class that also implements `IAggregateRoot`. This is a core rule: repositories only deal with [Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md)!
 *   `IRepositoryBase<T>` comes from an external library (`Ardalis.Specification`) and automatically provides common methods like `AddAsync`, `UpdateAsync`, `DeleteAsync`, `GetByIdAsync`, `ListAsync`, etc. This saves us a lot of repetitive coding!
 *   This interface lives in the `SharedKernel` layer. Why? Because both the `Application` layer (which *uses* the repository) and the `Infrastructure` layer (which *implements* it) need to know about this contract. Placing it in `SharedKernel` ensures no circular dependencies.
 
@@ -87,7 +87,7 @@ public class EfRepository<T> : RepositoryBase<T>, IRepository<T>
 
 ## How to Use the Repository in Our Application
 
-Let's revisit our `CreateProductHandler` from [Chapter 3](03_clean_architecture_layers_.md) to see how simple it is to use the `IRepository<T>` interface.
+Let's revisit our `CreateProductHandler` from [Chapter 3](Z-Tutorials/03_clean_architecture_layers_.md) to see how simple it is to use the `IRepository<T>` interface.
 
 The `Application` layer needs to create a new `Product` and save it. It will use `IRepository<Product>`.
 
@@ -137,10 +137,10 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
 
 **Explanation:**
 1.  Notice that `CreateProductHandler` asks for `IRepository<Product>` in its constructor. It doesn't care if it's `EfRepository`, `MongoDbRepository`, or `InMemoryRepository`. It just needs an object that can fulfill the `IRepository` contract.
-2.  After creating a `Product` object (our [Aggregate Root](01_domain_entities___aggregate_roots_.md) from the `Domain` layer), the handler simply calls `await _productRepository.AddAsync(product, cancellationToken);`. This is a clean, abstract way to tell the system to save the `product` to persistent storage.
+2.  After creating a `Product` object (our [Aggregate Root](Z-Tutorials/01_domain_entities___aggregate_roots_.md) from the `Domain` layer), the handler simply calls `await _productRepository.AddAsync(product, cancellationToken);`. This is a clean, abstract way to tell the system to save the `product` to persistent storage.
 3.  Similarly, to retrieve entities, you'd use `await _productRepository.ListAsync(...)` or `await _productRepository.GetByIdAsync(...)`. To update them after making changes to the `Aggregate Root` in memory, you'd use `await _productRepository.UpdateAsync(...)` or `await _productRepository.UpdateRangeAsync(...)`. The `Application` layer doesn't need to write any SQL queries!
 
-This clearly shows the **Dependency Rule** in action from [Chapter 3: Clean Architecture Layers](03_clean_architecture_layers_.md): the `Application` layer (inner) depends on the `IRepository` interface (from `SharedKernel`, which is also an inner layer concern for interfaces), but it *does not* depend on `EfRepository` or `AppDbContext` (which are in the `Infrastructure` outer layer).
+This clearly shows the **Dependency Rule** in action from [Chapter 3: Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md): the `Application` layer (inner) depends on the `IRepository` interface (from `SharedKernel`, which is also an inner layer concern for interfaces), but it *does not* depend on `EfRepository` or `AppDbContext` (which are in the `Infrastructure` outer layer).
 
 ## How It Works Under the Hood
 
@@ -217,10 +217,10 @@ This setup makes sure that `Application` layer's `CreateProductHandler` always r
 
 ## Conclusion
 
-In this chapter, we explored the **Repository Pattern** as a vital abstraction in Clean Architecture. We learned how the `IRepository<T>` interface (the contract in `SharedKernel`) defines *what* data operations are available for our [Aggregate Roots](01_domain_entities___aggregate_roots_.md), and how `EfRepository<T>` (the implementation in `Infrastructure`) provides the *how* using Entity Framework Core to interact with the database.
+In this chapter, we explored the **Repository Pattern** as a vital abstraction in Clean Architecture. We learned how the `IRepository<T>` interface (the contract in `SharedKernel`) defines *what* data operations are available for our [Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md), and how `EfRepository<T>` (the implementation in `Infrastructure`) provides the *how* using Entity Framework Core to interact with the database.
 
 By using the Repository Pattern, our `Application` layer can easily save, load, and manage `Domain` entities without being tied to any specific database technology. This keeps our core business logic clean, testable, and adaptable to future changes.
 
-Next, we will look at [Current User Context (ICurrentUser)](05_current_user_context__icurrentuser__.md), which helps us know "who" is performing actions in our application, a detail crucial for features like [Auditing](02_auditing___soft_deletion_.md) that we discussed earlier.
+Next, we will look at [Current User Context (ICurrentUser)](Z-Tutorials/05_current_user_context__icurrentuser__.md), which helps us know "who" is performing actions in our application, a detail crucial for features like [Auditing](Z-Tutorials/02_auditing___soft_deletion_.md) that we discussed earlier.
 
 ---

@@ -1,8 +1,8 @@
 # Chapter 5: Current User Context (ICurrentUser)
 
-Welcome back! In [Chapter 4: Repository Pattern (IRepository<T>)](04_repository_pattern__irepository_t___.md), we learned how to separate our business logic from the messy details of data storage. We saw how our `Application` layer can create and save a `Product` without knowing if it's going into a SQL database or a NoSQL one.
+Welcome back! In [Chapter 4: Repository Pattern (IRepository<T>)](Z-Tutorials/04_repository_pattern__irepository_t___.md), we learned how to separate our business logic from the messy details of data storage. We saw how our `Application` layer can create and save a `Product` without knowing if it's going into a SQL database or a NoSQL one.
 
-But what if we need to know *who* is performing these actions? In [Chapter 2: Auditing & Soft Deletion](02_auditing___soft_deletion_.md), we introduced `CreatedBy` and `UpdatedBy` fields on our entities to track who made changes. How do we get the ID of the current user so we can record it? This is where the **Current User Context** comes in, using the `ICurrentUser` interface.
+But what if we need to know *who* is performing these actions? In [Chapter 2: Auditing & Soft Deletion](Z-Tutorials/02_auditing___soft_deletion_.md), we introduced `CreatedBy` and `UpdatedBy` fields on our entities to track who made changes. How do we get the ID of the current user so we can record it? This is where the **Current User Context** comes in, using the `ICurrentUser` interface.
 
 ## The Problem: Knowing "Who" is Doing What
 
@@ -46,7 +46,7 @@ Now, let's see how our `Application` and `API` layers can use this `ICurrentUser
 
 ### Using `ICurrentUser` in the `Application` Layer (for Auditing)
 
-Recall from [Chapter 2: Auditing & Soft Deletion](02_auditing___soft_deletion_.md) that our entities have `CreatedBy` and `UpdatedBy` fields. When we create a new `Product`, we need to know *who* created it. The `ICurrentUser` makes this very easy:
+Recall from [Chapter 2: Auditing & Soft Deletion](Z-Tutorials/02_auditing___soft_deletion_.md) that our entities have `CreatedBy` and `UpdatedBy` fields. When we create a new `Product`, we need to know *who* created it. The `ICurrentUser` makes this very easy:
 
 ```csharp
 // File: Application/UseCases/ProductModule/Commands/CreateProduct/CreateProductHandler.cs (Simplified)
@@ -223,7 +223,7 @@ sequenceDiagram
 
 ### Connecting the Pieces: Dependency Injection (Again!)
 
-Just like with the `IRepository<T>` in [Chapter 4](04_repository_pattern__irepository_t___.md), we need to tell our application how to provide a `CurrentUser` object whenever an `ICurrentUser` is requested. This setup is done in the `Infrastructure` layer:
+Just like with the `IRepository<T>` in [Chapter 4](Z-Tutorials/04_repository_pattern__irepository_t___.md), we need to tell our application how to provide a `CurrentUser` object whenever an `ICurrentUser` is requested. This setup is done in the `Infrastructure` layer:
 
 ```csharp
 // File: Infrastructure/DependencyInjection/DependencyInjection.cs (Simplified)
@@ -257,8 +257,8 @@ This setup ensures that `ICurrentUser` can be painlessly injected into any const
 
 ## Conclusion
 
-In this chapter, we've explored the **Current User Context** using the `ICurrentUser` interface. We saw how it provides a clean, decoupled way to access information about the currently logged-in user, which is vital for features like [Auditing & Soft Deletion](02_auditing___soft_deletion_.md). By defining `ICurrentUser` in the `SharedKernel` and implementing `CurrentUser` in the `Infrastructure` layer, we maintain a strong separation of concerns, keeping our core business logic free from web-specific details.
+In this chapter, we've explored the **Current User Context** using the `ICurrentUser` interface. We saw how it provides a clean, decoupled way to access information about the currently logged-in user, which is vital for features like [Auditing & Soft Deletion](Z-Tutorials/02_auditing___soft_deletion_.md). By defining `ICurrentUser` in the `SharedKernel` and implementing `CurrentUser` in the `Infrastructure` layer, we maintain a strong separation of concerns, keeping our core business logic free from web-specific details.
 
-Now that we understand how to get the current user's context, we're ready to dive into how our application handles commands and queries: [MediatR (CQRS Commands & Handlers)](06_mediatr__cqrs_commands___handlers__.md).
+Now that we understand how to get the current user's context, we're ready to dive into how our application handles commands and queries: [MediatR (CQRS Commands & Handlers)](Z-Tutorials/06_mediatr__cqrs_commands___handlers__.md).
 
 ---

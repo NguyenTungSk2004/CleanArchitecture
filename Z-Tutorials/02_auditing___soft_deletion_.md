@@ -1,6 +1,6 @@
 # Chapter 2: Auditing & Soft Deletion
 
-Welcome back! In [Chapter 1: Domain Entities & Aggregate Roots](01_domain_entities___aggregate_roots_.md), we learned how to define the core "things" in our business, like a `Product`, as distinct entities with unique identities. We also saw how `Product` acts as an Aggregate Root, controlling its internal data and enforcing business rules.
+Welcome back! In [Chapter 1: Domain Entities & Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md), we learned how to define the core "things" in our business, like a `Product`, as distinct entities with unique identities. We also saw how `Product` acts as an Aggregate Root, controlling its internal data and enforcing business rules.
 
 Now, let's make our `Product` (and other entities) even smarter by giving them the ability to keep a detailed history and to be "deleted" in a safe, reversible way. This is where **Auditing** and **Soft Deletion** come in.
 
@@ -203,7 +203,7 @@ sequenceDiagram
 ```
 
 1.  **User Request:** A user (ID 101) wants to change a product's name.
-2.  **Application Service:** An [Application Service](03_clean_architecture_layers_.md) receives this request and loads the specific `Product` Aggregate Root (e.g., product P001) from the database using a [Repository](04_repository_pattern__irepository_t___.md).
+2.  **Application Service:** An [Application Service](Z-Tutorials/03_clean_architecture_layers_.md) receives this request and loads the specific `Product` Aggregate Root (e.g., product P001) from the database using a [Repository](Z-Tutorials/04_repository_pattern__irepository_t___.md).
 3.  **Execute Business Logic & Audit:** The Application Service calls `UpdateBasicInfo` on the `Product` Aggregate Root. Inside this method, the `Product` updates its `Name` and then calls `this.MarkUpdated(101)`.
 4.  **Audit Extension Magic:** The `MarkUpdated` extension method (from `AuditExtensions`) then sets `Product.UpdatedBy` to 101 and `Product.UpdatedDate` to the current time.
 5.  **Save Changes:** Finally, the Application Service tells the Repository to save the `Product` back to the database. The database now stores the new name, *and* who updated it and when.
@@ -240,7 +240,7 @@ sequenceDiagram
 ```
 
 1.  **Soft Delete Request:** A user (ID 202) wants to soft delete Product P001.
-2.  **Application Service & Load:** The [Application Service](03_clean_architecture_layers_.md) loads Product P001.
+2.  **Application Service & Load:** The [Application Service](Z-Tutorials/03_clean_architecture_layers_.md) loads Product P001.
 3.  **Mark Deleted:** The Application Service directly calls the `MarkDeleted` extension method on the `Product` object: `product.MarkDeleted(202);`. This method (from `AuditExtensions`) sets `IsDeleted` to `true`, records `DeletedBy` (202), and `DeletedDate`.
 4.  **Save Changes:** The `Product` object (with its `IsDeleted` flag set) is saved back to the database. The product is now "soft-deleted" – it's still in the database but marked as inactive. When querying for active products, we'd typically filter out those with `IsDeleted = true`.
 
@@ -300,10 +300,10 @@ The `GenericRecoveryHandler` works similarly, calling `entity.Recover()` on the 
 
 ## Conclusion
 
-In this chapter, we explored how **Auditing** helps us keep a detailed log of who created and updated our entities, and **Soft Deletion** provides a safe, reversible way to "delete" items without losing their data. We saw how simple interfaces like `ICreationTrackable`, `IUpdateTrackable`, and `ISoftDeletable`, combined with powerful `AuditExtensions`, enable these crucial features across all our [Domain Entities](01_domain_entities___aggregate_roots_.md).
+In this chapter, we explored how **Auditing** helps us keep a detailed log of who created and updated our entities, and **Soft Deletion** provides a safe, reversible way to "delete" items without losing their data. We saw how simple interfaces like `ICreationTrackable`, `IUpdateTrackable`, and `ISoftDeletable`, combined with powerful `AuditExtensions`, enable these crucial features across all our [Domain Entities](Z-Tutorials/01_domain_entities___aggregate_roots_.md).
 
 By embedding these capabilities directly into our entities, we ensure that every significant action (creation, update, soft deletion, recovery) is automatically tracked, making our application more robust, accountable, and user-friendly.
 
-Next, we'll zoom out from individual entities to understand the bigger picture: how our application is structured into different layers, a concept known as [Clean Architecture Layers](03_clean_architecture_layers_.md).
+Next, we'll zoom out from individual entities to understand the bigger picture: how our application is structured into different layers, a concept known as [Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md).
 
 ---

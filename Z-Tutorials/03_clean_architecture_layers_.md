@@ -1,6 +1,6 @@
 # Chapter 3: Clean Architecture Layers
 
-Welcome back! In our previous chapters, [Chapter 1: Domain Entities & Aggregate Roots](01_domain_entities___aggregate_roots_.md) and [Chapter 2: Auditing & Soft Deletion](02_auditing___soft_deletion_.md), we focused on the very core of our application: the business rules, entities like `Product`, and how they manage their own state and history. These concepts are crucial, but they are just one piece of a larger puzzle.
+Welcome back! In our previous chapters, [Chapter 1: Domain Entities & Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md) and [Chapter 2: Auditing & Soft Deletion](Z-Tutorials/02_auditing___soft_deletion_.md), we focused on the very core of our application: the business rules, entities like `Product`, and how they manage their own state and history. These concepts are crucial, but they are just one piece of a larger puzzle.
 
 Now, let's zoom out and understand how these core pieces fit into the entire application. How do we organize all the code – the web requests, the database interactions, the business logic – so that everything stays clean, easy to understand, test, and change?
 
@@ -38,12 +38,12 @@ Let's explore each layer:
 
 ### 1. `Domain` Layer: The Core Business Rules
 
-*   **Purpose:** This is the heart of your application. It contains all the essential business rules, concepts, and data structures (your [Domain Entities & Aggregate Roots](01_domain_entities___aggregate_roots_.md) and Value Objects). It's where the unique behavior of your business lives.
+*   **Purpose:** This is the heart of your application. It contains all the essential business rules, concepts, and data structures (your [Domain Entities & Aggregate Roots](Z-Tutorials/01_domain_entities___aggregate_roots_.md) and Value Objects). It's where the unique behavior of your business lives.
 *   **What's Inside:** Our `Product`, `PriceTier`, and the methods like `UpdatePriceTiers` that enforce business rules are all in the `Domain` layer.
 *   **Dependencies:** This layer is the most independent. It *never* depends on any other layers (like `Application`, `Infrastructure`, or `API`). It only depends on `SharedKernel` for common base classes or interfaces. This means your core business logic is not tied to any specific database, web framework, or UI.
 
 **File Path Example:** `Domain/ProductModule/Entities/Product.cs`
-We saw this in [Chapter 1](01_domain_entities___aggregate_roots_.md):
+We saw this in [Chapter 1](Z-Tutorials/01_domain_entities___aggregate_roots_.md):
 
 ```csharp
 // File: Domain/ProductModule/Entities/Product.cs (Simplified)
@@ -82,11 +82,11 @@ The `Domain` project only refers to `SharedKernel`, confirming its independence 
 ### 2. `Application` Layer: Business Workflows
 
 *   **Purpose:** This layer contains the "use cases" or "application services" that orchestrate the flow of data and interaction with the `Domain` layer to fulfill a specific business task (e.g., "Create a Product", "Update Product Prices", "Register a User"). It defines *what* the application can do.
-*   **What's Inside:** Command/Query handlers (using MediatR, which we'll cover in [Chapter 6: MediatR (CQRS Commands & Handlers)](06_mediatr__cqrs_commands___handlers__.md)), business workflow logic, and interfaces that `Infrastructure` will implement (like `IRepository<T>`).
+*   **What's Inside:** Command/Query handlers (using MediatR, which we'll cover in [Chapter 6: MediatR (CQRS Commands & Handlers)](Z-Tutorials/06_mediatr__cqrs_commands___handlers__.md)), business workflow logic, and interfaces that `Infrastructure` will implement (like `IRepository<T>`).
 *   **Dependencies:** It depends on the `Domain` layer (to use entities and their methods) and `SharedKernel`. It defines interfaces that external layers (like `Infrastructure`) must implement.
 
 **File Path Example:** `Application/UseCases/BaseAuditable/SoftDelete/GenericSoftDeleteHandler.cs`
-We saw a simplified version of this handler in [Chapter 2](02_auditing___soft_deletion_.md):
+We saw a simplified version of this handler in [Chapter 2](Z-Tutorials/02_auditing___soft_deletion_.md):
 
 ```csharp
 // File: Application/UseCases/BaseAuditable/SoftDelete/GenericSoftDeleteHandler.cs (Simplified)
@@ -274,7 +274,7 @@ sequenceDiagram
     *   It first asks the `IRepository<Product>` (an interface it knows about from `SharedKernel` or `Application` itself) to load the correct `Product` from storage.
     *   Crucially, the `Application` layer doesn't know *how* the `IRepository` gets the product (e.g., from SQL Server, a NoSQL database, or even memory). It just knows *that* it can.
 4.  **Infrastructure Layer (Repository Implementation):** The `Infrastructure` layer contains the actual implementation of `IRepository<Product>` (e.g., `ProductRepository`), which knows how to interact with the database (using `AppDbContext`) to fetch the `Product` data. It returns the `Product` object to the `Application` layer.
-5.  **Application Layer (Back to Handler):** Once the `Product` object is loaded, the `Application` handler calls the `UpdatePriceTiers()` method directly on the `Product` (our [Aggregate Root](01_domain_entities___aggregate_roots_.md) in the `Domain` layer).
+5.  **Application Layer (Back to Handler):** Once the `Product` object is loaded, the `Application` handler calls the `UpdatePriceTiers()` method directly on the `Product` (our [Aggregate Root](Z-Tutorials/01_domain_entities___aggregate_roots_.md) in the `Domain` layer).
 6.  **Domain Layer (Product Aggregate Root):** The `Product` object (in the `Domain` layer) receives the call. It contains and enforces its own business rules (e.g., ensuring prices are positive). It updates its internal `PriceTiers` list and marks itself as updated (using `AuditExtensions` from `SharedKernel`). The `Domain` layer has no idea that the call originated from a web request or that the data will be saved to a database.
 7.  **Application Layer (Back to Handler):** After the `Product` has updated its internal state, the `Application` handler instructs the `IRepository` to save the changes back to storage.
 8.  **Infrastructure Layer (Repository Implementation):** The `Infrastructure` layer's `ProductRepository` handles saving the modified `Product` object to the database.
@@ -287,6 +287,6 @@ This entire flow demonstrates how each layer plays its distinct role. The core b
 
 In this chapter, we've explored the fundamental concept of **Clean Architecture Layers**. We learned how separating our code into distinct layers – `Domain`, `Application`, `Infrastructure`, `API`, and `SharedKernel` – helps keep our application organized, makes our core business logic independent and testable, and allows us to easily swap out technical details (like databases or UI frameworks) without affecting the heart of our system. This structure is key to building maintainable, scalable, and robust applications.
 
-Next, we'll dive into one of the crucial patterns that enables this layered architecture: the [Repository Pattern (IRepository<T>)](04_repository_pattern__irepository_t___.md), which bridges the gap between our `Application` layer and the data storage in `Infrastructure`.
+Next, we'll dive into one of the crucial patterns that enables this layered architecture: the [Repository Pattern (IRepository<T>)](Z-Tutorials/04_repository_pattern__irepository_t___.md), which bridges the gap between our `Application` layer and the data storage in `Infrastructure`.
 
 ---

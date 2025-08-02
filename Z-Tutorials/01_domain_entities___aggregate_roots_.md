@@ -217,8 +217,8 @@ sequenceDiagram
 ```
 
 1.  **User Request:** A user wants to change a product's price tiers.
-2.  **Application Service:** An "Application Service" (we'll cover these more in [Clean Architecture Layers](03_clean_architecture_layers_.md)) receives this request. It's like the cashier in a store, handling your request.
-3.  **Load Aggregate Root:** The Application Service asks a "Repository" (explained in [Repository Pattern (IRepository<T>)](04_repository_pattern__irepository_t___.md)) to find the specific `Product` (our Aggregate Root) by its ID from the database.
+2.  **Application Service:** An "Application Service" (we'll cover these more in [Clean Architecture Layers](Z-Tutorials/03_clean_architecture_layers_.md)) receives this request. It's like the cashier in a store, handling your request.
+3.  **Load Aggregate Root:** The Application Service asks a "Repository" (explained in [Repository Pattern (IRepository<T>)](Z-Tutorials/04_repository_pattern__irepository_t___.md)) to find the specific `Product` (our Aggregate Root) by its ID from the database.
 4.  **Execute Business Logic:** Once the `Product` Aggregate Root is loaded into memory, the Application Service calls a method on it, like `UpdatePriceTiers`.
 5.  **Enforce Rules:** Inside the `UpdatePriceTiers` method, the `Product` itself contains and enforces its own business rules (e.g., by calling `ProductRules.EnsureValidPriceTiers`). It updates its internal `PriceTiers` list.
 6.  **Save Changes:** Finally, the Application Service tells the Repository to save the `Product` Aggregate Root back to the database. The Repository ensures that all the changes within the aggregate (including `PriceTiers` and `PreOrderInfo` if they were changed) are saved together.
@@ -231,6 +231,6 @@ In this chapter, we've learned about **Domain Entities** as objects with unique 
 
 By using Entities and Aggregate Roots, we create a robust and maintainable domain model where business logic is clear, encapsulated, and consistently enforced.
 
-In the [next chapter](02_auditing___soft_deletion_.md), we will build upon this foundation by exploring how to implement common features like Auditing and Soft Deletion directly on our Domain Entities.
+In the [next chapter](Z-Tutorials/02_auditing___soft_deletion_.md), we will build upon this foundation by exploring how to implement common features like Auditing and Soft Deletion directly on our Domain Entities.
 
 ---
