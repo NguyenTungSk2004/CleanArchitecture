@@ -73,3 +73,5 @@
     # JWT Bearer Auth: Xác thực token (Bearer) với JWT
     dotnet add "$basePath\API\API.csproj" package Microsoft.AspNetCore.Authentication.JwtBearer
 }
+
+Export-ModuleMember -Function Install-Packages

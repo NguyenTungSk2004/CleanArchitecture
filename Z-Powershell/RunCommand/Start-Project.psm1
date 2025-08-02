@@ -13,3 +13,5 @@
         Write-Host "Quá trình chạy API đã kết thúc."
     }
 }
+
+Export-ModuleMember -Function Start-Project

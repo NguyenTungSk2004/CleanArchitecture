@@ -1,9 +1,11 @@
-﻿function New-Solution {
+﻿function Initialize-Solution {
     param (
         # Đường dẫn gốc của dự án, mặc định là thư mục hiện tại
-        [string]$solutionName = "CleanArchitecture"
+        [string]$solutionName
     )
-    
+    if (-not $solutionName) {
+        $solutionName = "MySolution"
+    }    
     $solutionFile = "$solutionName.sln"
 
     $solution = Get-ChildItem -Path . -Recurse -Filter *.sln
@@ -29,3 +31,4 @@
     Write-Host "Đã tạo lại file $solutionFile và add tất cả project .csproj."
 }
 
+Export-ModuleMember -Function Initialize-Solution

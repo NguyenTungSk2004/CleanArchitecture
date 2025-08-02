@@ -1,9 +1,10 @@
 using Domain.AuthModule.Enum;
 using SharedKernel.Base;
+using SharedKernel.Interfaces;
 
 namespace Domain.AuthModule.AggregateRoot
 {
-    public class OtpSession : Entity
+    public class OtpSession : Entity, IAggregateRoot
     {
         public int? UserId { get; private set; }
         public string PhoneOrEmail { get; private set; } = string.Empty;
@@ -53,7 +54,7 @@ namespace Domain.AuthModule.AggregateRoot
                 AttemptCount++;
 
                 if (AttemptCount >= MaxAttempts)
-                {
+                { 
                     Status = OtpStatus.Failed;
                     throw new InvalidOperationException("Vượt quá số lần nhập sai OTP.");
                 }

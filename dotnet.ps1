@@ -1,15 +1,40 @@
 ﻿param (
     [Parameter(Mandatory = $true)]
     [string]$Command,
-    
+    [Parameter(Mandatory = $false)]
+    [string]$SubCommand,    
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$Args
 )
-    
-. "$PSScriptRoot/Z-Powershell/run.ps1"
-. "$PSScriptRoot/Z-Powershell/package.ps1"
-. "$PSScriptRoot/Z-Powershell/gen_sln.ps1"
 
+Import-Module "$PSScriptRoot/Z-Powershell/Modules/Projects/run.psm1"
+Import-Module "$PSScriptRoot/Z-Powershell/Modules/Projects/package.psm1"
+Import-Module "$PSScriptRoot/Z-Powershell/Modules/Projects/gen_sln.psm1"
+Import-Module "$PSScriptRoot/Z-Powershell/Modules/Application/gen_module.psm1"
+Import-Module "$PSScriptRoot/Z-Powershell/Help/Help.psm1"
+
+Function Start-Gen{
+    Param(
+        [Parameter(Mandatory = $true)]
+        [string]$Command,
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]]$Args
+    )
+    switch($Command){
+        'sln' {
+            New-Solution @Args
+        }
+        'module' {
+            New-Module @Args
+        }
+        default {
+            Write-Error "Unknown subcommand: $Command"
+            Get-Help
+            exit 1
+        }
+    }
+}   
+  
 try{
     $command = $Command.ToLowerInvariant()
     switch ($command) {
@@ -19,11 +44,12 @@ try{
         'package' {
             Install-Packages @Args
         }
-        'gen-sln' {
-            New-Solution @Args
+        'generate' {
+            Start-Gen $SubCommand @Args
         }
         default {
             Write-Error "Unknown command: $command"
+            Get-Help
             exit 1
         }
     }
