@@ -1,15 +1,19 @@
 namespace Infrastructure.Persistence;
 
 using Ardalis.Specification.EntityFrameworkCore;
+using SharedKernel.Base;
 using SharedKernel.Interfaces;
 
-public class EfRepository<T> : RepositoryBase<T>, IRepository<T>  where T : class, IAggregateRoot
+public class EfRepository<T> : RepositoryBase<T>, IRepository<T> where T : Entity, IAggregateRoot
 {
-    AppDbContext _dbContext;
     public EfRepository(AppDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
-    private IQueryable<T>? _entities;
-    public virtual IQueryable<T> Table => _entities ?? (_entities = _dbContext.Set<T>());
+}
+
+public class EfReadRepository<T> : RepositoryBase<T>, IReadRepository<T> where T : Entity
+{
+    public EfReadRepository(AppDbContext dbContext) : base(dbContext)
+    {
+    }
 }
