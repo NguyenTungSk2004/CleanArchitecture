@@ -9,6 +9,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.ToTable("Products");
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
 
         builder.HasIndex(x => x.Code).IsUnique();
         builder.HasIndex(x => x.BarCode).IsUnique();
@@ -22,6 +23,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.OwnsMany(p => p.PriceTiers, pb =>
         {
             pb.ToTable("ProductPriceTiers");
+            pb.HasKey("Id");
+            pb.Property<long>("Id").ValueGeneratedOnAdd();
             pb.WithOwner().HasForeignKey("ProductId");
             pb.Property(p => p.Price);
             pb.Property(p => p.Quantity);
