@@ -1,5 +1,5 @@
-using Domain.Commons.Exceptions;
 using Domain.ProductModule.ValueObjects;
+using SharedKernel.Exceptions;
 
 namespace Domain.ProductModule.Rules
 {

@@ -1,4 +1,4 @@
-namespace Domain.Commons.Exceptions;
+namespace SharedKernel.Exceptions;
 
 public class BusinessRuleViolationException : Exception
 {

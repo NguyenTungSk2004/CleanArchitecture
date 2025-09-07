@@ -1,4 +1,4 @@
-namespace Domain.AuthModule.Commons.PasswordHasher
+namespace SharedKernel.Interfaces
 {
     public interface IPasswordHasher
     {
