@@ -72,7 +72,7 @@ This is a simple class (often a `record` in C# for immutability) that holds all 
 using Domain.ProductModule.ValueObjects; // For PriceTier, PreOrderInfo
 using MediatR; // From the MediatR library
 
-namespace Application.UseCases.ProductModule.Commands.CreateProduct;
+namespace Application.Commands.ProductModule.CreateProduct;
 
 public record CreateProductCommand( // This is our message!
     string Code,
@@ -100,7 +100,7 @@ using Domain.ProductModule.Entities; // Product is from our Domain layer
 using MediatR; // From MediatR library
 using SharedKernel.Interfaces; // For IRepository and ICurrentUser
 
-namespace Application.UseCases.ProductModule.Commands.CreateProduct;
+namespace Application.Commands.ProductModule.CreateProduct;
 
 public class CreateProductHandler : IRequestHandler<CreateProductCommand, long> // This is the expert!
 {
@@ -159,7 +159,7 @@ The `ProductsController` (in the `API` layer) is the entry point for web request
 // File: API/Controller/ProductsController.cs (Simplified)
 using Microsoft.AspNetCore.Mvc;
 using MediatR; // To send commands!
-using Application.UseCases.ProductModule.Commands.CreateProduct; // Our command!
+using Application.Commands.ProductModule.CreateProduct; // Our command!
 
 namespace WebAPI.Controllers;
 

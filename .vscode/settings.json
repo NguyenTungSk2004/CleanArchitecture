@@ -4,6 +4,6 @@
         "**/obj": true,
         // "**/*.csproj": true,
         "**/*.csproj.*": true,
-        "**/*.sln": true,
+        // "**/*.sln": true,
     }
 }

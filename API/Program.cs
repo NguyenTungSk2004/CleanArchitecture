@@ -1,5 +1,5 @@
 using API.DependencyInjection;
-using Infrastructure.DependencyInjection;
+using Infrastructure.DI;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -13,8 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddInfrastructure(connectionString!);
+builder.Services.AddInfrastructure();
 builder.Services.AddServices();
 
 // Swagger (tùy chọn)

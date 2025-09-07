@@ -261,7 +261,7 @@ using SharedKernel.Interfaces;
 using MediatR; // From MediatR library (covered in a later chapter)
 using SharedKernel.Base;
 
-namespace Application.UseCases.BaseAuditable.SoftDelete;
+namespace Application.Commands.BaseAuditable.SoftDelete;
 
 public abstract class GenericSoftDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
     // TEntity must be an Entity, SoftDeletable, and AggregateRoot

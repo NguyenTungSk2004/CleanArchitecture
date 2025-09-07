@@ -54,7 +54,7 @@ using Domain.ProductModule.Entities;
 using MediatR;
 using SharedKernel.Interfaces; // For ICurrentUser and IRepository
 
-namespace Application.UseCases.ProductModule.Commands.CreateProduct;
+namespace Application.Commands.ProductModule.CreateProduct;
 
 public class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
 {

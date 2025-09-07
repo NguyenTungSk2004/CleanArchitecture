@@ -97,7 +97,7 @@ using Domain.ProductModule.Entities; // Product is an Aggregate Root
 using MediatR; // For handling commands
 using SharedKernel.Interfaces; // For IRepository and ICurrentUser
 
-namespace Application.UseCases.ProductModule.Commands.CreateProduct;
+namespace Application.Commands.ProductModule.CreateProduct;
 
 public class CreateProductHandler : IRequestHandler<CreateProductCommand, long>
 {

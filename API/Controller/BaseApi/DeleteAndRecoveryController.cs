@@ -1,9 +1,9 @@
 using SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.UseCases.BaseAuditable.SoftDelete;
-using Application.UseCases.BaseAuditable.HardDelete;
-using Application.UseCases.BaseAuditable.Recovery;
+using Application.Commands.BaseAuditable.SoftDelete;
+using Application.Commands.BaseAuditable.HardDelete;
+using Application.Commands.BaseAuditable.Recovery;
 
 namespace API.Controllers.BaseApi
 {
